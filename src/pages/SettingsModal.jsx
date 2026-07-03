@@ -42,12 +42,12 @@ const SettingsModal = ({ onClose }) => {
         <div className="card">
           <h3 className="mb-4 flex items-center gap-2"><Globe className="text-blue-600"/> 🌐 앱 접속 주소</h3>
           <div className="bg-gray-100 p-3 rounded-lg flex items-center justify-between mb-4 border border-gray-200">
-            <span className="text-sm font-mono text-gray-700 truncate">https://data-explorer-paps.vercel.app</span>
+            <span className="text-sm font-mono text-gray-700 truncate">https://paps-data-app.vercel.app</span>
             <span className="text-xl">🔗</span>
           </div>
           <div className="flex flex-col items-center mb-4">
             <div className="bg-white p-2 rounded-xl shadow-sm inline-block border border-gray-200 mb-2">
-              <QRCodeSVG value="https://data-explorer-paps.vercel.app" size={120} />
+              <QRCodeSVG value="https://paps-data-app.vercel.app" size={120} />
             </div>
             <p className="text-xs text-center text-gray-500">
               📱 위 주소로 접속하거나 QR 코드를 스캔하세요<br/>
@@ -55,7 +55,7 @@ const SettingsModal = ({ onClose }) => {
               📌 북마크 추가하면 더 편리해요
             </p>
           </div>
-          <a href="https://data-explorer-paps.vercel.app" target="_blank" rel="noopener noreferrer" className="btn btn-primary w-full bg-blue-600 hover:bg-blue-700 border-none text-white">
+          <a href="https://paps-data-app.vercel.app" target="_blank" rel="noopener noreferrer" className="btn btn-primary w-full bg-blue-600 hover:bg-blue-700 border-none text-white">
             앱 접속하기
           </a>
         </div>
