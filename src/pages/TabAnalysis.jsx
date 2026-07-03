@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { PapsContext } from '../context/PapsContext';
-import { Compass, Sparkles, ChevronLeft, ChevronRight, Check, Award, AlertCircle, Dumbbell, Calendar } from 'lucide-react';
-import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip } from 'recharts';
+import { Compass, Award, AlertCircle, Dumbbell } from 'lucide-react';
+import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer } from 'recharts';
 
 const levelNames = {
   1: '🌟 슈퍼 탐험가',
@@ -64,8 +64,6 @@ const typeLabels = {
 const TabAnalysis = () => {
   const { records, getLatestRecord } = useContext(PapsContext);
   const record = getLatestRecord();
-  
-  const [currentCardIndex, setCurrentCardIndex] = useState(0);
 
   // 나만의 운동 설계소 관련 상태
   const [designStep, setDesignStep] = useState(1);
@@ -93,13 +91,6 @@ const TabAnalysis = () => {
     { subject: '줄넘기', A: 6 - record.grades.cardioSub },
   ];
 
-  const types = ['cardio', 'flexibility', 'strength', 'power', 'cardioSub'];
-  const currentType = types[currentCardIndex];
-  const currentGrade = record.grades[currentType];
-
-  const handlePrev = () => setCurrentCardIndex(prev => (prev === 0 ? types.length - 1 : prev - 1));
-  const handleNext = () => setCurrentCardIndex(prev => (prev === types.length - 1 ? 0 : prev + 1));
-
   // 강점과 약점 찾기
   let bestType = 'cardio';
   let bestGrade = 5;
@@ -111,19 +102,6 @@ const TabAnalysis = () => {
     if (grade > worstGrade) { worstGrade = grade; worstType = type; }
   });
 
-  // 과거의 나와 비교 그래프 데이터 (1차 vs 현재)
-  const compareData = [];
-  if (records.length > 0) {
-    const firstRec = records[0];
-    const latestRec = record;
-    Object.keys(typeLabels).forEach(key => {
-      compareData.push({
-        name: typeLabels[key].split(' ')[1],
-        '1차 기록': parseFloat(firstRec.values[key]) || 0,
-        '현재 기록': parseFloat(latestRec.values[key]) || 0,
-      });
-    });
-  }
 
   // 운동 설계소 처리
   const toggleWorkout = (name) => {
@@ -208,46 +186,9 @@ const TabAnalysis = () => {
         </p>
       </div>
 
-      {/* 과거의 나와 비교 그래프 */}
-      {records.length > 1 && (
-        <div className="card">
-          <h3 className="mb-2 text-slate-800">나의 성장 타임라인</h3>
-          <p className="text-xs text-slate-500 mb-4">전국 평균이 아닌 1차 측정 결과와 나 자신을 직접 비교해봐요!</p>
-          <div style={{ width: '100%', height: 200 }}>
-            <ResponsiveContainer>
-              <BarChart data={compareData} margin={{ top: 5, right: 0, left: -20, bottom: 5 }}>
-                <CartesianGrid strokeDasharray="3 3" opacity={0.1} />
-                <XAxis dataKey="name" fontSize={11} tick={{ fill: '#334155' }} />
-                <YAxis fontSize={11} tick={{ fill: '#334155' }} />
-                <Tooltip />
-                <Bar dataKey="1차 기록" fill="#cbd5e1" radius={[4, 4, 0, 0]} />
-                <Bar dataKey="현재 기록" fill="var(--secondary-color)" radius={[4, 4, 0, 0]} />
-              </BarChart>
-            </ResponsiveContainer>
-          </div>
-        </div>
-      )}
 
-      {/* AI 코치 세부 카드 */}
-      <div className="card relative p-0 overflow-hidden mb-4">
-        <div className="flex items-center justify-between p-4 bg-slate-100 border-b border-slate-200">
-          <button onClick={handlePrev} className="p-1 rounded-full hover:bg-slate-200 transition"><ChevronLeft /></button>
-          <div className="text-center">
-            <div className="font-bold text-slate-800 text-base">{typeLabels[currentType]}</div>
-            <div className="text-xs font-black level-3-text">
-              {levelNames[currentGrade]} 🔵
-            </div>
-          </div>
-          <button onClick={handleNext} className="p-1 rounded-full hover:bg-slate-200 transition"><ChevronRight /></button>
-        </div>
-        
-        <div className="p-4">
-          <div className="flex gap-2 items-start bg-indigo-50/80 p-3 rounded-xl border border-indigo-100 mb-3">
-            <Sparkles className="text-indigo-600 mt-0.5 flex-shrink-0" size={16} />
-            <p className="text-xs text-indigo-950 leading-relaxed font-semibold">{getAiMessage(currentType, currentGrade)}</p>
-          </div>
-        </div>
-      </div>
+
+
 
       {/* 나만의 운동 설계소 (처방이 아닌 자기 설계 피처) */}
       <div className="card border-2 border-indigo-200 bg-gradient-to-br from-white to-slate-50">

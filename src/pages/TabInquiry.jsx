@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { PapsContext } from '../context/PapsContext';
-import { HelpCircle, Search, Lightbulb, PenTool, BookOpen, CheckSquare, Printer } from 'lucide-react';
+import { HelpCircle, Search, Lightbulb, PenTool, BookOpen, CheckSquare } from 'lucide-react';
 
 const habitsList = [
   { id: 'sleepLate', label: '🛏️ 잠을 늦게 자는 편이야' },
@@ -284,9 +284,7 @@ const TabInquiry = () => {
               </div>
             ))}
           </div>
-          <button className="btn btn-secondary border-slate-300 text-slate-600 mt-4 py-1 text-xs w-full flex items-center justify-center gap-1">
-            <Printer size={12} /> 성찰 포트폴리오 인쇄하기 (PDF)
-          </button>
+
         </div>
       )}
     </div>

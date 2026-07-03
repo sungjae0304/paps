@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { PapsContext } from '../context/PapsContext';
-import { Trophy, Users, Heart, ThumbsUp, Music, ShieldCheck, Printer } from 'lucide-react';
+import { Trophy, Users, Music } from 'lucide-react';
 
 const explorerTypes = {
   power: {
@@ -57,8 +57,7 @@ const danceSuggestions = {
   flexibility: ["🤸 스트레칭 동작", "🤸 유연하게 회전하는 동작", "🤸 몸을 낮추는 부드러운 웨이브"],
   power: ["⚡ 빠른 점프", "⚡ 급격한 방향 전환", "⚡ 리듬에 맞춘 빠른 스텝"],
   strength: ["💪 강한 착지 동작", "💪 힘이 들어간 정지 동작(프리즈)", "💪 튼튼하게 버티는 시그니처 포즈"],
-  cardio: ["🏃 지치지 않는 스텝 댄스", "🏃 대형을 넓게 이동하는 동작", "🏃 연속 점핑 잭 동작"],
-  cardioSub: ["🏃 지치지 않는 스텝 댄스", "🏃 대형을 넓게 이동하는 동작", "🏃 연속 점핑 잭 동작"]
+  cardio: ["🏃 지치지 않는 스텝 댄스", "🏃 대형을 넓게 이동하는 동작", "🏃 연속 점핑 잭 동작"]
 };
 
 const TabSports = () => {
@@ -178,9 +177,7 @@ const TabSports = () => {
                 <ul className="list-disc pl-5 text-xs text-slate-600 space-y-1">
                   {savedDanceMoves.map((m, i) => <li key={i}>{m}</li>)}
                 </ul>
-                <button className="btn btn-primary bg-purple-600 mt-3 py-1 text-xs w-full">
-                  <Printer size={12} /> 안무 계획서 내보내기 (PDF)
-                </button>
+
               </div>
             )}
           </div>
@@ -249,9 +246,7 @@ const TabSports = () => {
                   <p className="text-xs text-indigo-900 font-bold">📢 모둠 작전 전략 진단</p>
                   <p className="text-[11px] text-indigo-700 font-semibold mt-0.5">"이 모둠은 빠른 공격과 튼튼한 패스 연결이 최적화된 [속공 공격형] 포메이션입니다!"</p>
                 </div>
-                <button className="btn btn-secondary border-indigo-300 text-indigo-600 py-1 text-xs w-full flex items-center justify-center gap-1">
-                  <Printer size={12} /> 작전판 인쇄하기 (PDF)
-                </button>
+
               </div>
             )}
           </div>
@@ -267,17 +262,9 @@ const TabSports = () => {
               <h4 className="text-base text-slate-800 font-black mb-0">{sport.name}</h4>
               <span className="badge bg-blue-100 text-blue-800 text-[10px]">{sport.role}</span>
             </div>
-            <p className="text-xs text-slate-600 mb-3 bg-slate-50 p-2.5 rounded-lg font-medium leading-relaxed">
+            <p className="text-xs text-slate-600 mb-1 bg-slate-50 p-2.5 rounded-lg font-medium leading-relaxed">
               💡 왜 나한테 맞냐면? {sport.reason}
             </p>
-            <div className="flex gap-2">
-              <button className="flex-1 btn btn-secondary py-1 text-xs">
-                <ThumbsUp size={12} /> 좋아요
-              </button>
-              <button className="flex-1 btn btn-secondary py-1 text-xs">
-                <Heart size={12} /> 해봤어요
-              </button>
-            </div>
           </div>
         ))}
       </div>

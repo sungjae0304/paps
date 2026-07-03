@@ -19,7 +19,7 @@ const slides = [
             <span className="text-2xl">🔑</span> 선생님: 우측 상단 열쇠 아이콘 클릭
           </h4>
           <p className="text-sm text-slate-600 leading-relaxed">
-            교사 이메일과 비밀번호로 로그인하세요.
+            비밀번호 4자리를 입력하면 교사용 관리 화면이 열려요.
           </p>
         </div>
       </div>

@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { PapsContext } from '../context/PapsContext';
-import { Lock, FileText, Download, ShieldCheck, ChevronLeft, Send, Star, BarChart3, MessageSquare } from 'lucide-react';
+import { Lock, Download, ShieldCheck, ChevronLeft, Send, Star, BarChart3, MessageSquare } from 'lucide-react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
 const mockStudentInquiries = [
@@ -22,10 +22,8 @@ const TeacherAdmin = ({ onClose }) => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
-  // 어드민 피드백 및 미션 제어 상태
   const [inquiries, setInquiries] = useState(mockStudentInquiries);
   const [commentInputs, setCommentInputs] = useState({});
-  const [sentMissions, setSentMissions] = useState({});
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -61,10 +59,7 @@ const TeacherAdmin = ({ onClose }) => {
     }));
   };
 
-  const handleSendMission = (studentId, strength) => {
-    setSentMissions(prev => ({ ...prev, [studentId]: true }));
-    alert(`[학번 ${studentId}] 학생에게 [내일 스포츠 수업에서 ${strength} 강점을 활용해봐 ⚡] 미션 알림을 발송했습니다!`);
-  };
+
 
   const exportCSV = () => {
     const headers = ['학년', '반', '번호', '날짜', '회차', '왕복오래달리기', '유연성', '근력', '순발력', '줄넘기'];
@@ -198,7 +193,7 @@ const TeacherAdmin = ({ onClose }) => {
         {/* 3. 학급 전체 데이터 목록 & 수업 피드백 미션 전송 */}
         <div className="card">
           <h3 className="mb-2 text-slate-800">학급 전체 PAPS 데이터 현황</h3>
-          <p className="text-xs text-slate-500 mb-4">학생들의 5대 능력 측정 현황입니다. 강점에 따라 수업용 팁을 전송해 주세요.</p>
+          <p className="text-xs text-slate-500 mb-4">학생들의 체력 측정 현황입니다.</p>
           
           <div className="overflow-x-auto mb-4">
             <table className="w-full text-xs text-left">
@@ -208,12 +203,11 @@ const TeacherAdmin = ({ onClose }) => {
                   <th className="px-2 py-2">회차</th>
                   <th className="px-2 py-2">오래달리기</th>
                   <th className="px-2 py-2">유연성</th>
-                  <th className="px-2 py-2">수업 피드백</th>
                 </tr>
               </thead>
               <tbody>
                 {records.length === 0 ? (
-                  <tr><td colSpan="5" className="text-center py-4 text-slate-500">데이터가 없습니다.</td></tr>
+                  <tr><td colSpan="4" className="text-center py-4 text-slate-500">데이터가 없습니다.</td></tr>
                 ) : (
                   records.map(r => (
                     <tr key={r.id} className="bg-white border-b">
@@ -221,15 +215,6 @@ const TeacherAdmin = ({ onClose }) => {
                       <td className="px-2 py-2">{r.round}차</td>
                       <td className="px-2 py-2">{r.values.cardio}회</td>
                       <td className="px-2 py-2">{r.values.flexibility}cm</td>
-                      <td className="px-2 py-2">
-                        <button 
-                          onClick={() => handleSendMission(`${r.grade}-${r.classNum}-${r.studentNum}`, '유연성')}
-                          disabled={sentMissions[`${r.grade}-${r.classNum}-${r.studentNum}`]}
-                          className="btn py-1 px-2 text-[10px] w-auto bg-blue-600 text-white disabled:opacity-50"
-                        >
-                          {sentMissions[`${r.grade}-${r.classNum}-${r.studentNum}`] ? '발송됨 ✅' : '미션 전송 ⚡'}
-                        </button>
-                      </td>
                     </tr>
                   ))
                 )}
@@ -240,9 +225,6 @@ const TeacherAdmin = ({ onClose }) => {
           <div className="flex gap-2">
             <button onClick={exportCSV} className="btn btn-secondary flex-1">
               <Download size={14} /> CSV 내보내기
-            </button>
-            <button className="btn btn-primary flex-1 bg-green-600 border-green-600 hover:bg-green-700 hover:border-green-700">
-              <FileText size={14} /> 연구 보고서 (PDF)
             </button>
           </div>
         </div>
