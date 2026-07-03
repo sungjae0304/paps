@@ -1,11 +1,21 @@
 import React, { useState, useContext } from 'react';
 import { PapsContext } from '../context/PapsContext';
-import { Activity, Calendar, Hash, Save, BarChart2 } from 'lucide-react';
+import { Activity, Calendar, Hash, Save, BarChart2, HelpCircle, CheckCircle } from 'lucide-react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+
+const explanations = {
+  cardio: "🫀 왕복오래달리기: 폐와 심장이 얼마나 오래 버티는지 보여줘!",
+  flexibility: "🤸 앉아윗몸앞으로굽히기: 내 척추와 다리 근육이 얼마나 유연한지 보여줘!",
+  strength: "💪 윗몸말아올리기: 배와 몸통 근육이 얼마나 튼튼하고 오래 견디는지 보여줘!",
+  power: "⚡ 50m 달리기: 얼마나 순식간에 빠르게 달릴 수 있는지 보여줘!",
+  cardioSub: "🫀 1분 줄넘기: 심폐지구력을 기르는 데 도움을 주는 보조 줄넘기 운동!"
+};
 
 const TabRecord = () => {
   const { records, addRecord } = useContext(PapsContext);
   const [showToast, setShowToast] = useState(false);
+  const [activeHelp, setActiveHelp] = useState(null);
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
 
   const [formData, setFormData] = useState({
     schoolName: '○○초등학교',
@@ -41,9 +51,14 @@ const TabRecord = () => {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleOpenConfirm = (e) => {
     e.preventDefault();
-    addRecord(formData);
+    setShowConfirmModal(true);
+  };
+
+  const handleSave = async () => {
+    setShowConfirmModal(false);
+    await addRecord(formData);
     setShowToast(true);
     setTimeout(() => setShowToast(false), 3000);
     
@@ -61,6 +76,29 @@ const TabRecord = () => {
     });
   };
 
+  // 최근 기록과 즉시 비교하기
+  const getDiffMsg = (type, currentValue) => {
+    if (records.length === 0) return null;
+    const prev = records[records.length - 1];
+    const prevVal = parseFloat(prev.values[type]);
+    const currVal = parseFloat(currentValue);
+    if (isNaN(prevVal) || scarcityCheck(currentValue)) return null;
+
+    const diff = currVal - prevVal;
+    if (type === 'power') { // 달리기 등 초 단위 (낮을수록 좋음)
+      if (diff < 0) return `지난번보다 ${Math.abs(diff).toFixed(1)}초 더 빨라졌어! 🏃⚡`;
+      if (diff > 0) return `지난번보다 ${diff.toFixed(1)}초 느려졌지만 실망하지 마! 💪`;
+    } else {
+      if (diff > 0) return `지난번보다 +${diff} 늘었어! 완전 멋져 🎉`;
+      if (diff < 0) return `지난번보다 ${diff} 줄었지만 꾸준히 하면 늘 거야! 💪`;
+    }
+    return "지난번과 똑같이 훌륭한 기록이야! 👍";
+  };
+
+  const scarcityCheck = (val) => {
+    return val === undefined || val === null || val === '';
+  };
+
   // 차트 데이터 가공
   const chartData = records.map(r => ({
     name: `${r.round}차`,
@@ -76,8 +114,14 @@ const TabRecord = () => {
         <h2>내 체력 기록</h2>
       </div>
 
+      {/* 내 몸을 숫자로 만나는 시간 인트로 배너 */}
+      <div className="card bg-gradient-to-r from-blue-600 to-indigo-700 text-white border-none p-5 mb-4">
+        <h3 className="text-white text-lg font-bold mb-1">🔍 내 몸을 숫자로 만나는 시간</h3>
+        <p className="text-xs text-blue-100">오늘 측정한 나의 진짜 체력 결과를 직접 입력해봐. 숫자가 나의 성장을 말해줄 거야!</p>
+      </div>
+
       <div className="card">
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleOpenConfirm}>
           <div style={{ background: '#f8fafc', padding: '1.25rem', borderRadius: '14px', border: '1px solid #e2e8f0', marginBottom: '1.5rem' }}>
             <h4 style={{ fontSize: '0.75rem', fontWeight: 800, color: '#475569', letterSpacing: '0.05em', marginBottom: '1rem', textTransform: 'uppercase' }}>🏫 학생 소속 정보</h4>
             
@@ -125,26 +169,51 @@ const TabRecord = () => {
           </div>
 
           <h3 className="mt-4 mb-2">PAPS 측정값 입력</h3>
-          <div className="form-group">
-            <label className="form-label">🫀 왕복오래달리기 (회)</label>
-            <input type="number" name="cardio" value={formData.values.cardio} onChange={handleChange} className="form-control" placeholder="예: 40" required />
-          </div>
-          <div className="form-group">
-            <label className="form-label">🤸 앉아윗몸앞으로굽히기 (cm)</label>
-            <input type="number" step="0.1" name="flexibility" value={formData.values.flexibility} onChange={handleChange} className="form-control" placeholder="예: 12.5" required />
-          </div>
-          <div className="form-group">
-            <label className="form-label">💪 윗몸말아올리기 (회)</label>
-            <input type="number" name="strength" value={formData.values.strength} onChange={handleChange} className="form-control" placeholder="예: 30" required />
-          </div>
-          <div className="form-group">
-            <label className="form-label">⚡ 50m 달리기 (초)</label>
-            <input type="number" step="0.1" name="power" value={formData.values.power} onChange={handleChange} className="form-control" placeholder="예: 9.5" required />
-          </div>
-          <div className="form-group">
-            <label className="form-label">🫀 1분 줄넘기 (회)</label>
-            <input type="number" name="cardioSub" value={formData.values.cardioSub} onChange={handleChange} className="form-control" placeholder="예: 100" required />
-          </div>
+          
+          {[
+            { key: 'cardio', label: '🫀 왕복오래달리기 (회)', placeholder: '예: 40' },
+            { key: 'flexibility', label: '🤸 앉아윗몸앞으로굽히기 (cm)', placeholder: '예: 12.5', step: '0.1' },
+            { key: 'strength', label: '💪 윗몸말아올리기 (회)', placeholder: '예: 30' },
+            { key: 'power', label: '⚡ 50m 달리기 (초)', placeholder: '예: 9.5', step: '0.1' },
+            { key: 'cardioSub', label: '🫀 1분 줄넘기 (회)', placeholder: '예: 100' }
+          ].map(field => (
+            <div key={field.key} className="form-group mb-4">
+              <div className="flex justify-between items-center mb-1">
+                <label className="form-label mb-0">{field.label}</label>
+                <button 
+                  type="button" 
+                  onClick={() => setActiveHelp(activeHelp === field.key ? null : field.key)}
+                  className="text-gray-400 hover:text-blue-500 bg-transparent border-none p-0 cursor-pointer flex items-center gap-0.5 text-xs"
+                >
+                  <HelpCircle size={14} /> 이게 뭐야?
+                </button>
+              </div>
+              
+              {activeHelp === field.key && (
+                <div className="p-2 bg-blue-50 border border-blue-100 rounded-lg text-xs text-blue-900 mb-2 animate-slide-up">
+                  {explanations[field.key]}
+                </div>
+              )}
+
+              <input 
+                type="number" 
+                step={field.step || '1'} 
+                name={field.key} 
+                value={formData.values[field.key]} 
+                onChange={handleChange} 
+                className="form-control" 
+                placeholder={field.placeholder} 
+                required 
+              />
+              
+              {/* 실시간 피드백 */}
+              {formData.values[field.key] && (
+                <p className="text-[11px] text-blue-600 font-bold mt-1">
+                  {getDiffMsg(field.key, formData.values[field.key])}
+                </p>
+              )}
+            </div>
+          ))}
 
           <button type="submit" className="btn btn-primary mt-4">
             <Save size={18} /> 기록 저장하기
@@ -155,6 +224,36 @@ const TabRecord = () => {
       {showToast && (
         <div className="card level-2-bg text-center animate-slide-up" style={{ padding: '1rem', marginBottom: '1rem' }}>
           🎉 기록 완료! 탐험가야, 데이터가 쌓이고 있어!
+        </div>
+      )}
+
+      {/* 요약 검토 모달 (저장 전 요약 확인) */}
+      {showConfirmModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+          <div className="card w-full max-w-sm animate-slide-up">
+            <h3 className="mb-2 text-center text-slate-800">📋 내가 입력한 데이터 확인하기</h3>
+            <p className="text-xs text-slate-500 text-center mb-4">이 데이터가 맞나요? 틀린 부분이 있다면 눌러서 고칠 수 있어!</p>
+            
+            <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 text-sm space-y-2 mb-4">
+              <p className="text-slate-700">🏫 <b>소속:</b> {formData.schoolName} {formData.grade}학년 {formData.classNum}반 {formData.studentNum}번</p>
+              <p className="text-slate-700">📅 <b>회차:</b> {formData.round}차 측정</p>
+              <hr className="my-2 border-slate-200"/>
+              <p className="text-slate-700">🫀 왕복오래달리기: <b>{formData.values.cardio}회</b></p>
+              <p className="text-slate-700">🤸 앉아윗몸앞으로굽히기: <b>{formData.values.flexibility}cm</b></p>
+              <p className="text-slate-700">💪 윗몸말아올리기: <b>{formData.values.strength}회</b></p>
+              <p className="text-slate-700">⚡ 50m 달리기: <b>{formData.values.power}초</b></p>
+              <p className="text-slate-700">🫀 1분 줄넘기: <b>{formData.values.cardioSub}회</b></p>
+            </div>
+
+            <div className="flex gap-2">
+              <button onClick={() => setShowConfirmModal(false)} className="btn btn-secondary flex-1">
+                수정하기
+              </button>
+              <button onClick={handleSave} className="btn btn-primary flex-1">
+                <CheckCircle size={16} /> 확인, 저장!
+              </button>
+            </div>
+          </div>
         </div>
       )}
 

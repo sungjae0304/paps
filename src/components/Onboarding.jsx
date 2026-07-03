@@ -61,6 +61,24 @@ const slides = [
     )
   },
   {
+    title: "ePAPS랑 뭐가 달라요? 🤔",
+    content: (
+      <div className="space-y-3 text-left">
+        <div className="bg-white p-4 rounded-xl border border-gray-200">
+          <p className="text-sm font-bold text-slate-800 mb-1">📋 기존 ePAPS는...</p>
+          <p className="text-xs text-slate-600">선생님이 일괄 입력하고, 등급 숫자를 받아보고 끝납니다.</p>
+        </div>
+        <div className="bg-blue-50 p-4 rounded-xl border border-blue-200">
+          <p className="text-sm font-bold text-blue-900 mb-1">🚀 D.A.T.A 탐험대는...</p>
+          <p className="text-xs text-blue-700">내가 직접 데이터를 관찰하고, 탐구 질문을 만들어 체육 수업(운동·스포츠·표현)에서 주도적으로 활용해요!</p>
+        </div>
+        <p className="text-[11px] text-slate-500 bg-gray-100 p-2 rounded text-center">
+          "본 앱은 ePAPS 행정 등록을 대체하지 않아요. PAPS 결과를 여기서 탐험해요! 🗺️"
+        </p>
+      </div>
+    )
+  },
+  {
     title: "이것만 기억해요",
     content: (
       <div className="space-y-3 text-left bg-orange-50 p-5 rounded-2xl border border-orange-100 text-orange-950">
