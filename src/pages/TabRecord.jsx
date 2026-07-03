@@ -8,6 +8,7 @@ const TabRecord = () => {
   const [showToast, setShowToast] = useState(false);
 
   const [formData, setFormData] = useState({
+    schoolName: '○○초등학교',
     grade: '5',
     classNum: '1',
     studentNum: '1',
@@ -77,25 +78,34 @@ const TabRecord = () => {
 
       <div className="card">
         <form onSubmit={handleSubmit}>
-          <div className="grid grid-cols-3 gap-2 mb-4">
-            <div className="form-group mb-0">
-              <label className="form-label">학년</label>
-              <select name="grade" value={formData.grade} onChange={handleChange} className="form-control" required>
-                <option value="5">5학년</option>
-                <option value="6">6학년</option>
-              </select>
+          <div style={{ background: '#f8fafc', padding: '1.25rem', borderRadius: '14px', border: '1px solid #e2e8f0', marginBottom: '1.5rem' }}>
+            <h4 style={{ fontSize: '0.75rem', fontWeight: 800, color: '#475569', letterSpacing: '0.05em', marginBottom: '1rem', textTransform: 'uppercase' }}>🏫 학생 소속 정보</h4>
+            
+            <div className="form-group" style={{ marginBottom: '1rem' }}>
+              <label className="form-label" style={{ color: '#1e293b', fontWeight: 700 }}>학교명</label>
+              <input type="text" name="schoolName" value={formData.schoolName} onChange={handleChange} className="form-control" placeholder="학교명을 입력하세요" required />
             </div>
-            <div className="form-group mb-0">
-              <label className="form-label">반</label>
-              <select name="classNum" value={formData.classNum} onChange={handleChange} className="form-control" required>
-                {[...Array(10)].map((_, i) => (
-                  <option key={i} value={i + 1}>{i + 1}반</option>
-                ))}
-              </select>
-            </div>
-            <div className="form-group mb-0">
-              <label className="form-label">번호</label>
-              <input type="number" name="studentNum" value={formData.studentNum} onChange={handleChange} className="form-control" min="1" max="35" required />
+
+            <div className="grid grid-cols-3 gap-2">
+              <div className="form-group mb-0">
+                <label className="form-label" style={{ color: '#1e293b', fontWeight: 700 }}>학년</label>
+                <select name="grade" value={formData.grade} onChange={handleChange} className="form-control" required>
+                  <option value="5">5학년</option>
+                  <option value="6">6학년</option>
+                </select>
+              </div>
+              <div className="form-group mb-0">
+                <label className="form-label" style={{ color: '#1e293b', fontWeight: 700 }}>반</label>
+                <select name="classNum" value={formData.classNum} onChange={handleChange} className="form-control" required>
+                  {[...Array(10)].map((_, i) => (
+                    <option key={i} value={i + 1}>{i + 1}반</option>
+                  ))}
+                </select>
+              </div>
+              <div className="form-group mb-0">
+                <label className="form-label" style={{ color: '#1e293b', fontWeight: 700 }}>번호</label>
+                <input type="number" name="studentNum" value={formData.studentNum} onChange={handleChange} className="form-control" min="1" max="35" required />
+              </div>
             </div>
           </div>
 
