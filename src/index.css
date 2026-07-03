@@ -56,8 +56,8 @@ h1, h2, h3, h4 {
   line-height: 1.2;
 }
 
-h1 { font-size: 1.5rem; color: var(--text-light); }
-h2 { font-size: 1.25rem; margin-bottom: 1rem; color: var(--text-light); }
+h1 { font-size: 1.5rem; color: white; text-shadow: 0 1px 6px rgba(0,0,0,0.5); }
+h2 { font-size: 1.5rem; margin-bottom: 1rem; color: white; font-weight: 800; text-shadow: 0 2px 8px rgba(0,0,0,0.6); }
 h3 { font-size: 1.125rem; margin-bottom: 0.5rem; color: var(--text-light); }
 h4 { font-size: 1rem; color: var(--text-light); }
 
@@ -329,14 +329,15 @@ select.form-control {
 }
 
 /* Level Specific Styles */
-.level-1-text { color: var(--level-1) !important; }
-.level-2-text { color: var(--level-2) !important; }
-.level-3-text { color: var(--level-3) !important; }
-.level-4-text { color: var(--level-4) !important; }
-.level-5-text { color: var(--level-5) !important; }
+.level-1-text { color: #FBBF24 !important; filter: drop-shadow(0 0 4px rgba(251,191,36,0.4)); }
+.level-2-text { color: #34D399 !important; filter: drop-shadow(0 0 4px rgba(52,211,153,0.4)); }
+.level-3-text { color: #60A5FA !important; filter: drop-shadow(0 0 4px rgba(96,165,250,0.4)); }
+.level-4-text { color: #A78BFA !important; filter: drop-shadow(0 0 4px rgba(167,139,250,0.4)); }
+.level-5-text { color: #94A3B8 !important; filter: drop-shadow(0 0 4px rgba(148,163,184,0.3)); }
 
 .level-1-bg { background-color: rgba(217, 119, 6, 0.1); border: 1px solid var(--level-1); }
 .level-2-bg { background-color: rgba(5, 150, 105, 0.1); border: 1px solid var(--level-2); }
 .level-3-bg { background-color: rgba(37, 99, 235, 0.1); border: 1px solid var(--level-3); }
 .level-4-bg { background-color: rgba(124, 58, 237, 0.1); border: 1px solid var(--level-4); }
 .level-5-bg { background-color: rgba(71, 85, 105, 0.1); border: 1px solid var(--level-5); }
+
