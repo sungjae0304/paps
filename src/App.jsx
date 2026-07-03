@@ -56,7 +56,7 @@ function App() {
 
           <main className="content">
             <Routes>
-              <Route path="/" element={<TabRecord />} />
+              <Route path="/" element={<TabRecord onShowPrivacy={() => setShowPrivacy(true)} onShowTerms={() => setShowTerms(true)} />} />
               <Route path="/analysis" element={<TabAnalysis />} />
               <Route path="/sports" element={<TabSports />} />
               <Route path="/inquiry" element={<TabInquiry />} />

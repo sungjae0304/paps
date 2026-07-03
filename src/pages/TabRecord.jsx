@@ -11,7 +11,7 @@ const explanations = {
   cardioSub: "🫀 1분 줄넘기: 심폐지구력을 기르는 데 도움을 주는 보조 줄넘기 운동!"
 };
 
-const TabRecord = () => {
+const TabRecord = ({ onShowPrivacy, onShowTerms }) => {
   const { records, addRecord } = useContext(PapsContext);
   const [showToast, setShowToast] = useState(false);
   const [activeHelp, setActiveHelp] = useState(null);
@@ -218,6 +218,12 @@ const TabRecord = () => {
           <button type="submit" className="btn btn-primary mt-4">
             <Save size={18} /> 기록 저장하기
           </button>
+          
+          <div className="flex justify-center gap-3 mt-4" style={{ fontSize: '11px' }}>
+            <button type="button" onClick={onShowPrivacy} className="bg-transparent border-none text-slate-500 hover:text-slate-700 cursor-pointer underline font-bold" style={{ color: '#64748b' }}>개인정보처리방침</button>
+            <span style={{ color: '#cbd5e1' }}>|</span>
+            <button type="button" onClick={onShowTerms} className="bg-transparent border-none text-slate-500 hover:text-slate-700 cursor-pointer underline font-bold" style={{ color: '#64748b' }}>사용약관</button>
+          </div>
         </form>
       </div>
 
