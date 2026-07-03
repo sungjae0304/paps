@@ -1,5 +1,5 @@
 import React, { createContext, useState, useEffect } from 'react';
-import { saveRecordToFirebase } from '../services/firebase';
+import { saveRecordToFirebase, fetchRecordsFromFirebase } from '../services/firebase';
 
 export const PapsContext = createContext();
 
@@ -72,6 +72,26 @@ export const PapsProvider = ({ children }) => {
       }
     }
   ]);
+
+  useEffect(() => {
+    const loadData = async () => {
+      const fbRecords = await fetchRecordsFromFirebase();
+      if (fbRecords.length > 0) {
+        const updated = fbRecords.map(r => {
+          const grades = {
+            cardio: calculateGrade('cardio', r.values.cardio),
+            flexibility: calculateGrade('flexibility', r.values.flexibility),
+            strength: calculateGrade('strength', r.values.strength),
+            power: calculateGrade('power', r.values.power),
+            cardioSub: calculateGrade('cardioSub', r.values.cardioSub),
+          };
+          return { ...r, grades };
+        });
+        setRecords(updated);
+      }
+    };
+    loadData();
+  }, []);
 
   const addRecord = async (newRecord) => {
     const grades = {
