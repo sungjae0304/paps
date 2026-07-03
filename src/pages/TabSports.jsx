@@ -101,6 +101,15 @@ const TabSports = () => {
   const myType = explorerTypes[bestType] || explorerTypes['cardio'];
   const myDanceSuggestions = danceSuggestions[bestType] || danceSuggestions['cardio'];
 
+  // bgClass를 inline style 객체로 변환
+  const typeStyleMap = {
+    power:       { background: '#fefce8', border: '1px solid #fde68a', color: '#713f12' },
+    cardio:      { background: '#f0fdf4', border: '1px solid #bbf7d0', color: '#14532d' },
+    flexibility: { background: '#faf5ff', border: '1px solid #e9d5ff', color: '#4c1d95' },
+    strength:    { background: '#fff1f2', border: '1px solid #fecdd3', color: '#881337' },
+  };
+  const typeCardStyle = typeStyleMap[bestType] || typeStyleMap['cardio'];
+
   const handleGroupMemberChange = (idx, field, val) => {
     const updated = [...groupMembers];
     updated[idx][field] = val;
@@ -125,11 +134,11 @@ const TabSports = () => {
       </div>
 
       {/* 내 체력 유형 진단 */}
-      <div className={`card border ${myType.bgClass} text-center`}>
+      <div className="card border text-center" style={typeCardStyle}>
         <div className="text-4xl mb-2">{myType.icon}</div>
-        <h3 className="mb-1 text-slate-800">{myType.name}</h3>
-        <p className="text-xs mb-4 font-bold">{myType.desc}</p>
-        <div className="bg-white bg-opacity-70 rounded-xl p-3">
+        <h3 className="mb-1" style={{ color: typeCardStyle.color }}>{myType.name}</h3>
+        <p className="text-xs mb-4 font-bold" style={{ color: typeCardStyle.color }}>{myType.desc}</p>
+        <div style={{ background: 'rgba(255,255,255,0.7)', borderRadius: '12px', padding: '0.75rem' }}>
           <p className="text-xs text-slate-500 mb-1">🏅 모둠 활동 추천 역할</p>
           <p className="font-bold text-slate-800">{myType.role}</p>
         </div>

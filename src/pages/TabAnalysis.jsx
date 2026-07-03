@@ -169,9 +169,9 @@ const TabAnalysis = () => {
       </div>
 
       {/* 체지방 비만 제거 심리 안전 문구 */}
-      <div className="bg-slate-800 p-3 rounded-xl border border-slate-700 flex items-center gap-2 mb-4 text-xs text-slate-300">
-        <AlertCircle size={16} className="text-orange-400 shrink-0" />
-        <span>우리는 몸의 체지방 수치가 아닌 진짜 신체 능력에 집중해요 💪 (비만 항목 없음)</span>
+      <div style={{ background: '#1e293b', padding: '0.75rem 1rem', borderRadius: '12px', border: '1px solid #334155', display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1rem' }}>
+        <AlertCircle size={16} style={{ color: '#fb923c', flexShrink: 0 }} />
+        <span style={{ fontSize: '0.75rem', color: '#cbd5e1' }}>우리는 몸의 체지방 수치가 아닌 진짜 신체 능력에 집중해요 💪 (비만 항목 없음)</span>
       </div>
 
       <div className="card text-center">
@@ -190,20 +190,20 @@ const TabAnalysis = () => {
       </div>
 
       {/* 강점 언어 분석 카드 */}
-      <div className="card border-l-4 border-amber-500 bg-amber-50/50 mb-4">
+      <div className="card mb-4" style={{ borderLeft: '4px solid #d97706', background: '#fffbeb' }}>
         <div className="flex items-center gap-2 mb-2">
-          <Award className="text-amber-600" size={24} />
-          <h3 className="text-amber-900 mb-0 font-black">⭐ 너의 슈퍼 파워: {typeLabels[bestType].split(' ')[1]}</h3>
+          <Award size={24} style={{ color: '#d97706' }} />
+          <h3 style={{ color: '#78350f', marginBottom: 0, fontWeight: 900 }}>⭐ 너의 슈퍼 파워: {typeLabels[bestType].split(' ')[1]}</h3>
         </div>
-        <p className="text-sm text-amber-950 font-medium">
+        <p style={{ fontSize: '0.875rem', color: '#451a03', fontWeight: 500 }}>
           이 분야에서 너는 훌륭한 강점을 지니고 있어! 체육 시간에 이 능력을 마음껏 뽐내봐 💃
         </p>
       </div>
 
       {/* 도전 포인트 (부드러운 언어) */}
-      <div className="card border-l-4 border-blue-500 bg-blue-50/50 mb-4">
-        <h3 className="text-blue-900 mb-2 font-black">🎯 성장 중인 도전 포인트: {typeLabels[worstType].split(' ')[1]}</h3>
-        <p className="text-sm text-blue-950 font-medium">
+      <div className="card mb-4" style={{ borderLeft: '4px solid #2563eb', background: '#eff6ff' }}>
+        <h3 style={{ color: '#1e3a8a', marginBottom: '0.5rem', fontWeight: 900 }}>🎯 성장 중인 도전 포인트: {typeLabels[worstType].split(' ')[1]}</h3>
+        <p style={{ fontSize: '0.875rem', color: '#1e3a8a', fontWeight: 500 }}>
           이번에는 <b>[{typeLabels[worstType].split(' ')[1]}]</b> 탐험지에 도전해볼까? 조금만 노력을 기울이면 반드시 성장할 수 있을 거야!
         </p>
       </div>

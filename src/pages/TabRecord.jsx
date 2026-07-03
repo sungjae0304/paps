@@ -115,9 +115,9 @@ const TabRecord = () => {
       </div>
 
       {/* 내 몸을 숫자로 만나는 시간 인트로 배너 */}
-      <div className="card bg-gradient-to-r from-blue-600 to-indigo-700 text-white border-none p-5 mb-4">
-        <h3 className="text-white text-lg font-bold mb-1">🔍 내 몸을 숫자로 만나는 시간</h3>
-        <p className="text-xs text-blue-100">오늘 측정한 나의 진짜 체력 결과를 직접 입력해봐. 숫자가 나의 성장을 말해줄 거야!</p>
+      <div className="card bg-gradient-to-r from-blue-600 to-indigo-700 border-none p-5 mb-4" style={{ background: 'linear-gradient(to right, #2563eb, #4338ca)' }}>
+        <h3 style={{ color: 'white', fontSize: '1.125rem', fontWeight: 700, marginBottom: '0.25rem' }}>🔍 내 몸을 숫자로 만나는 시간</h3>
+        <p style={{ color: '#bfdbfe', fontSize: '0.75rem' }}>오늘 측정한 나의 진짜 체력 결과를 직접 입력해봐. 숫자가 나의 성장을 말해줄 거야!</p>
       </div>
 
       <div className="card">
@@ -208,7 +208,7 @@ const TabRecord = () => {
               
               {/* 실시간 피드백 */}
               {formData.values[field.key] && (
-                <p className="text-[11px] text-blue-600 font-bold mt-1">
+                <p style={{ fontSize: '11px', color: '#2563eb', fontWeight: 700, marginTop: '0.25rem' }}>
                   {getDiffMsg(field.key, formData.values[field.key])}
                 </p>
               )}
