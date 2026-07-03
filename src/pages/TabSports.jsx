@@ -163,9 +163,14 @@ const TabSports = () => {
                   <span className="text-sm font-bold text-slate-700">{move}</span>
                   <button 
                     onClick={() => toggleSaveDanceMove(move)}
-                    className={`btn py-1 px-3 text-xs w-auto ${savedDanceMoves.includes(move) ? 'bg-purple-600 text-white' : 'btn-secondary border-purple-300 text-purple-600'}`}
+                    className={`btn py-1 px-3 text-xs w-auto transition-all ${
+                      savedDanceMoves.includes(move) 
+                        ? 'bg-purple-600 text-white' 
+                        : 'bg-white text-purple-700 border-2 border-purple-300'
+                    }`}
+                    style={{ color: savedDanceMoves.includes(move) ? '#ffffff' : '#7c3aed' }}
                   >
-                    {savedDanceMoves.includes(move) ? '선택됨 ✅' : '안무 담기'}
+                    {savedDanceMoves.includes(move) ? '선택됨 ✓' : '안무 담기'}
                   </button>
                 </div>
               ))}

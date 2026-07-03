@@ -18,7 +18,7 @@ const TabRecord = ({ onShowPrivacy, onShowTerms }) => {
   const [showConfirmModal, setShowConfirmModal] = useState(false);
 
   const [formData, setFormData] = useState({
-    schoolName: '○○초등학교',
+    schoolName: '서울고척초등학교',
     grade: '5',
     classNum: '1',
     studentNum: '1',
@@ -65,7 +65,7 @@ const TabRecord = ({ onShowPrivacy, onShowTerms }) => {
     // Reset values but keep student info
     setFormData({
       ...formData,
-      round: (parseInt(formData.round) + 1).toString(),
+      round: Math.min(parseInt(formData.round) + 1, 3).toString(),
       values: {
         cardio: '',
         flexibility: '',
@@ -235,7 +235,7 @@ const TabRecord = ({ onShowPrivacy, onShowTerms }) => {
 
       {/* 요약 검토 모달 (저장 전 요약 확인) */}
       {showConfirmModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
           <div className="card w-full max-w-sm animate-slide-up">
             <h3 className="mb-2 text-center text-slate-800">📋 내가 입력한 데이터 확인하기</h3>
             <p className="text-xs text-slate-500 text-center mb-4">이 데이터가 맞나요? 틀린 부분이 있다면 눌러서 고칠 수 있어!</p>

@@ -26,7 +26,7 @@ const SplashScreen = ({ onFinish }) => {
         <h1 className="text-white text-3xl font-bold mb-8">D.A.T.A 탐험대</h1>
         
         <div className="text-white text-xs text-center opacity-80 mt-12 space-y-1">
-          <p>소속학교: ○○초등학교</p>
+          <p>소속학교: 서울고척초등학교</p>
           <p>제작자: 이성재</p>
         </div>
       </div>
