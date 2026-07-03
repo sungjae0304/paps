@@ -10,12 +10,15 @@ import TeacherAdmin from './pages/TeacherAdmin';
 import SettingsModal from './pages/SettingsModal';
 import SplashScreen from './components/SplashScreen';
 import Onboarding from './components/Onboarding';
+import { PrivacyPolicy, TermsOfUse } from './pages/Policies';
 
 function App() {
   const [showAdmin, setShowAdmin] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
   const [showSplash, setShowSplash] = useState(true);
   const [showOnboarding, setShowOnboarding] = useState(false);
+  const [showPrivacy, setShowPrivacy] = useState(false);
+  const [showTerms, setShowTerms] = useState(false);
 
   useEffect(() => {
     const hasSeenOnboarding = localStorage.getItem('hasSeenOnboarding');
@@ -92,12 +95,20 @@ function App() {
           </nav>
           
           <footer className="fixed bottom-0 left-0 w-full bg-[#1E293B] text-white flex justify-between items-center px-4 z-[200]" style={{ height: '36px', fontSize: '12px' }}>
-            <span>🏫 ○○초등학교</span>
+            <div className="flex gap-2 items-center">
+              <span>🏫 ○○초등학교</span>
+              <span style={{ opacity: 0.3 }}>|</span>
+              <button onClick={() => setShowPrivacy(true)} className="text-white hover:underline bg-transparent border-none p-0 cursor-pointer" style={{ fontSize: '11px', outline: 'none' }}>개인정보처리방침</button>
+              <span style={{ opacity: 0.3 }}>|</span>
+              <button onClick={() => setShowTerms(true)} className="text-white hover:underline bg-transparent border-none p-0 cursor-pointer" style={{ fontSize: '11px', outline: 'none' }}>사용약관</button>
+            </div>
             <span>제작자 이성재</span>
           </footer>
 
           {showAdmin && <TeacherAdmin onClose={() => setShowAdmin(false)} />}
           {showSettings && <SettingsModal onClose={() => setShowSettings(false)} />}
+          {showPrivacy && <PrivacyPolicy onClose={() => setShowPrivacy(false)} />}
+          {showTerms && <TermsOfUse onClose={() => setShowTerms(false)} />}
         </div>
       </Router>
     </PapsProvider>
