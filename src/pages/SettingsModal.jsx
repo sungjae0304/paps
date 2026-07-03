@@ -62,8 +62,8 @@ const SettingsModal = ({ onClose }) => {
 
         <div className="card bg-[#24292e] text-white">
           <h3 className="mb-4 flex items-center gap-2 text-white"><GitBranch /> 📂 소스코드 & 개발 정보</h3>
-          <a href="https://github.com/sungjae/data-explorer-paps" target="_blank" rel="noopener noreferrer" className="text-blue-400 text-sm underline block mb-4 truncate">
-            https://github.com/sungjae/data-explorer-paps
+          <a href="https://github.com/sungjae0304/paps" target="_blank" rel="noopener noreferrer" className="text-blue-400 text-sm underline block mb-4 truncate">
+            https://github.com/sungjae0304/paps
           </a>
           <div className="space-y-2 text-sm text-gray-300 mb-4">
             <p>💻 개발 언어: React / HTML / CSS</p>
