@@ -47,6 +47,13 @@ const calculateGrade = (type, value) => {
 };
 
 export const PapsProvider = ({ children }) => {
+  const [activeStudent, setActiveStudent] = useState({
+    schoolName: '서울고척초등학교',
+    grade: '5',
+    classNum: '1',
+    studentNum: '1'
+  });
+
   // 모의 데이터 초기값 (사용자 요청에 따라 조금 채워둡니다)
   const [records, setRecords] = useState([
     {
@@ -110,13 +117,30 @@ export const PapsProvider = ({ children }) => {
     setRecords([...records, finalRecord]);
   };
 
+  const getStudentRecords = () => {
+    return records.filter(r => 
+      r.grade === activeStudent.grade && 
+      r.classNum === activeStudent.classNum && 
+      r.studentNum === activeStudent.studentNum
+    );
+  };
+
   const getLatestRecord = () => {
-    if (records.length === 0) return null;
-    return records[records.length - 1];
+    const studentRecords = getStudentRecords();
+    if (studentRecords.length === 0) return null;
+    return studentRecords[studentRecords.length - 1];
   };
 
   return (
-    <PapsContext.Provider value={{ records, addRecord, getLatestRecord, calculateGrade }}>
+    <PapsContext.Provider value={{ 
+      records: getStudentRecords(), 
+      allRecords: records, 
+      activeStudent, 
+      setActiveStudent, 
+      addRecord, 
+      getLatestRecord, 
+      calculateGrade 
+    }}>
       {children}
     </PapsContext.Provider>
   );

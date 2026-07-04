@@ -17,7 +17,7 @@ const mockFitGrowthData = [
 ];
 
 const TeacherAdmin = ({ onClose }) => {
-  const { records } = useContext(PapsContext);
+  const { allRecords: records } = useContext(PapsContext);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');

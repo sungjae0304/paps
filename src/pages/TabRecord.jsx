@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { PapsContext } from '../context/PapsContext';
 import { Activity, Calendar, Hash, Save, BarChart2, HelpCircle, CheckCircle } from 'lucide-react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
@@ -12,7 +12,7 @@ const explanations = {
 };
 
 const TabRecord = ({ onShowPrivacy, onShowTerms }) => {
-  const { records, addRecord } = useContext(PapsContext);
+  const { records, addRecord, setActiveStudent } = useContext(PapsContext);
   const [showToast, setShowToast] = useState(false);
   const [activeHelp, setActiveHelp] = useState(null);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
@@ -32,6 +32,15 @@ const TabRecord = ({ onShowPrivacy, onShowTerms }) => {
       cardioSub: ''
     }
   });
+
+  useEffect(() => {
+    setActiveStudent({
+      schoolName: formData.schoolName,
+      grade: formData.grade,
+      classNum: formData.classNum,
+      studentNum: formData.studentNum
+    });
+  }, [formData.schoolName, formData.grade, formData.classNum, formData.studentNum, setActiveStudent]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
