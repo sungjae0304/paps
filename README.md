@@ -1,16 +1,188 @@
-# React + Vite
+# 🧭 D.A.T.A 탐험대 (PAPS 기반 체력 탐구 플랫폼)
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+> **"잠들어 있는 PAPS 데이터를 깨워, 학생 주도적 체력 탐구학습으로 전환하다."**
 
-Currently, two official plugins are available:
+D.A.T.A 탐험대는 단순한 체력 측정·처방 앱이 아닙니다.  
+2022 개정 교육과정이 강조하는 **'깊이 있는 학습(deep learning)'** 과 **'자기주도성'** 을  
+체육 교과에 융합하여, 학생 스스로 자신의 신체 데이터를 **탐구하고 건강한 삶을 설계**하도록 돕는  
+**체육과 데이터 탐구학습 플랫폼**입니다.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+---
 
-## React Compiler
+## 🌟 기존 ePAPS와의 핵심 차별화
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+본 프로젝트는 수동적인 하향식(Top-Down) 체력 처방 시스템의 한계를 극복하고,  
+철저히 **학생(학습자) 중심의 탐구와 교사의 수업 연구**에 최적화되도록 설계되었습니다.
 
-## Expanding the Oxlint configuration
+| 구분 | ePAPS (기존) | D.A.T.A 탐험대 (본 앱) |
+|---|---|---|
+| 데이터 주체 | 교사가 입력·관리 | **학생이 직접 입력·탐구** |
+| 결과 언어 | 1~5등급 숫자 통보 | **탐험 레벨·강점 언어**로 전환 |
+| 비교 기준 | 전국 기준 등급 비교 | **과거의 나와만 비교** |
+| 학생 역할 | 수동적 수용자 (처방 받음) | **능동적 탐구자 (스스로 설계)** |
+| 체지방·비만 | 포함 (필수평가) | **완전 제외** (심리적 안전 설계) |
+| 교과 연결 | 없음 | 운동·스포츠·표현 영역 **직결** |
+| 성찰 기록 | 없음 | 탐구 질문·성찰 노트·포트폴리오 **누적** |
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+### 1. 🎓 수동적 처방에서 '능동적 자기 설계'로
+
+- **ePAPS**: AI가 일방적으로 운동을 처방 → 학생은 수동적으로 따라 함  
+- **D.A.T.A 탐험대**: 학생이 자신의 PAPS 원시 데이터(Raw Data)를 직관적 대시보드로 확인하고,  
+  **스스로 도전할 체력 요소와 운동 루틴을 직접 설계**합니다.  
+  운동 후에는 앱 내 성찰 노트에 메타인지 기록을 남겨 주도성을 극대화합니다.
+
+### 2. 🔍 '결과 확인'에서 'D.A.T.A 탐구 사이클'로
+
+체육 수업과 연계한 **D.A.T.A 모형**을 앱에 구현했습니다.
+
+```
+Discover(발견) → Analyze(분석) → Transform(변환) → Act(실천)
+```
+
+- "내 유연성은 왜 부족할까?" → 학생 스스로 탐구 질문 생성  
+- "내 생활 습관 중 무엇을 바꾸면 달라질까?" → 가설 설정·실험  
+- 주간 데이터 변화를 통한 학습자 주도적 피드백·성찰
+
+### 3. 📊 수업 연구대회를 위한 '성장 에비던스(Evidence)' 추출
+
+교사용 관리 화면에서 **학급 전체의 체력 향상도**와  
+**학생 개별 탐구 기록**을 시각화·다운로드할 수 있어,  
+수업혁신사례연구대회 보고서의 질적·양적 근거 자료로 직접 활용됩니다.
+
+---
+
+## 🚀 주요 기능
+
+### 👨‍🎓 학생용
+
+| 기능 | 설명 |
+|---|---|
+| **내 체력 기록** | PAPS 5개 요소 직접 입력, 회차별 누적 타임라인, 직전 기록과 실시간 비교 |
+| **데이터 분석** | 체력 레이더 차트, 탐험 레벨(등급 숫자 미표시), 강점·도전 포인트 언어 분석 |
+| **나만의 운동 설계소** | AI 추천을 받는 것이 아닌, 학생이 목표·운동·요일을 **단계별로 직접 설계** |
+| **스포츠 탐험** | 체력 유형 진단(🦁스피드형·🐘지구력형·🦊유연형·🐻파워형), 모둠 역할·작전판 자동 생성 |
+| **표현 영역 연결** | 강점 체력 기반 안무 동작 제안, 모둠 안무 기획보드 |
+| **탐구 질문** | 생활 습관 선택 → AI가 D.A.T.A 연계 탐구 질문 3개 생성, 성찰 노트 저장 |
+
+> ⚠️ **설계 원칙**: 앱이 학습의 주체가 되는 것이 아닙니다.  
+> 학생이 데이터를 발견하고 질문을 생성하는 과정에서 **보조 역할**을 수행합니다.  
+> (High-Touch High-Tech 철학: 에듀테크는 교사-학생 상호작용을 극대화하는 도구)
+
+### 👨‍🏫 교사용
+
+| 기능 | 설명 |
+|---|---|
+| **학급 데이터 현황** | 사전(1차)·사후(2~3차) 체력 요소별 평균 변화 그래프 |
+| **학생 탐구 기록 열람** | 학번 기반 탐구 노트 확인, 교사 피드백 코멘트 기능 |
+| **연구 데이터 내보내기** | CSV 다운로드, 보고서용 통계 요약 |
+
+---
+
+## 💻 시스템 아키텍처 및 데이터 플로우
+
+```
+학생: PAPS 데이터 직접 입력 및 탐구 질문 생성
+    ↓
+Firebase Firestore: 실시간 데이터 저장 (학번 기반, 이름 미수집)
+    ↓
+학생 대시보드: 레이더 차트·강점 분석·운동 자기 설계
+    ↓
+교사 LMS: 학급 전체 성장 궤적 시각화
+    ↓
+수업 연구대회: 데이터 기반 질적·양적 성과 근거 도출
+```
+
+---
+
+## 🛠️ 기술 스택
+
+| 구분 | 기술 |
+|---|---|
+| Frontend | React 19, Vite, Custom CSS (CSS Variables 기반) |
+| Backend & DB | Firebase Firestore (Realtime Database), Firebase Authentication |
+| Deployment | Vercel |
+| 주요 라이브러리 | Recharts (레이더·막대 차트), Lucide React (아이콘), QRCode.react |
+
+---
+
+## 📐 교육적 이론 배경
+
+| 이론 | 적용 |
+|---|---|
+| **개념 기반 탐구학습** (Marschall & French, 2021) | D.A.T.A 4단계 탐구 사이클 구조화 |
+| **백워드 설계** (Wiggins & McTighe) | 역량 목표 → 평가 → 학습 순서 설계 |
+| **하이터치-하이테크 (HTHT)** | 앱은 보조 도구, 교사-학생 상호작용이 핵심 |
+| **2022 개정 체육과 교육과정** | 운동·스포츠·표현 3개 영역 성취기준 연계 |
+| **OECD 2030 학생 주도성** | 처방 받기 → 학생이 설계하는 구조 전환 |
+
+---
+
+## 🔐 개인정보 보호 설계
+
+- 학년·반·번호로만 식별 (이름 수집 없음)
+- 체지방·BMI 관련 항목 **완전 제외** (초등학생 신체상 민감성 고려)
+- 학년도 종료 후 자동 삭제
+- 개인정보처리방침·사용약관 앱 내 탑재
+
+---
+
+## 💡 활용 사례: 2026 수업혁신사례연구대회
+
+본 플랫폼은 **초등학교 5학년 체육 교과**의 개념 기반 탐구학습을 위해 개발되었습니다.
+
+- **실천과제 1 (체력 탐험대, 운동 영역)**: PAPS 원시 데이터 발견 → 운동 자기 설계  
+- **실천과제 2 (전략 탐험대, 스포츠 영역)**: 체력 유형 기반 모둠 역할 배정 및 작전 설계  
+- **실천과제 3 (몸짓 탐험대, 표현 영역)**: 강점 체력 기반 안무 동작 설계 (캡스톤)
+
+수업 시간의 물리적 한계를 보완하고, 방과 후 가정 연계로 이어지는  
+**온오프라인 연계 교육 생태계**를 지원합니다.
+
+---
+
+## 🌐 배포 정보
+
+- **앱 주소**: https://paps-data-app.vercel.app
+- **소스코드**: https://github.com/sungjae0304/paps
+
+---
+
+## 👤 제작 정보
+
+| 항목 | 내용 |
+|---|---|
+| 소속 | 서울고척초등학교 |
+| 제작자 | 이성재 (초등 교사, AIEDAP 마스터 교원) |
+| 개발 기간 | 2026년 6월 ~ 7월 |
+| 문의 | *(이메일 주소를 여기에 입력하세요)* |
+
+---
+
+## 📁 프로젝트 구조
+
+```
+src/
+├── components/
+│   ├── SplashScreen.jsx   # 스플래시 화면
+│   └── Onboarding.jsx     # 최초 사용 안내
+├── pages/
+│   ├── TabRecord.jsx      # 내 체력 기록
+│   ├── TabAnalysis.jsx    # 데이터 분석 + 운동 설계소
+│   ├── TabSports.jsx      # 스포츠·표현 탐험
+│   ├── TabInquiry.jsx     # 탐구 질문
+│   ├── TeacherAdmin.jsx   # 교사 관리
+│   ├── SettingsModal.jsx  # 설정
+│   └── Policies.jsx       # 개인정보처리방침·약관
+├── context/
+│   └── PapsContext.jsx    # 전역 상태 관리
+└── services/
+    └── firebase.js        # Firebase 연동
+```
+
+---
+
+## ✅ 개선 완료 사항
+
+- [x] Tailwind CSS 설치 완료 및 적용
+- [x] 카드 내부 색상 강제 덮어쓰기 규칙 수정
+- [x] 하단 푸터 고정 위치 개선
+- [x] 회차 자동 증가 최대값(3차) 제한 추가
