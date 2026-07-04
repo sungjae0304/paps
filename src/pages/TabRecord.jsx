@@ -186,11 +186,11 @@ const TabRecord = ({ onShowPrivacy, onShowTerms }) => {
             <div className="form-group mb-0">
               <label className="form-label flex items-center gap-1">🔐 승인 코드</label>
               <input 
-                type="text" 
+                type="password" 
                 value={inputCode} 
                 onChange={(e) => setInputCode(e.target.value)} 
                 className="form-control" 
-                placeholder="2026" 
+                placeholder="코드 입력" 
                 required 
               />
             </div>
