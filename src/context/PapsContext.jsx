@@ -54,6 +54,8 @@ export const PapsProvider = ({ children }) => {
     studentNum: '1'
   });
 
+  const [classCode, setClassCode] = useState('2026'); // 기본 코드
+
   // 모의 데이터 초기값 (사용자 요청에 따라 조금 채워둡니다)
   const [records, setRecords] = useState([
     {
@@ -137,6 +139,8 @@ export const PapsProvider = ({ children }) => {
       allRecords: records, 
       activeStudent, 
       setActiveStudent, 
+      classCode,
+      setClassCode,
       addRecord, 
       getLatestRecord, 
       calculateGrade 

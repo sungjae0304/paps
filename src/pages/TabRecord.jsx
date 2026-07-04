@@ -12,10 +12,12 @@ const explanations = {
 };
 
 const TabRecord = ({ onShowPrivacy, onShowTerms }) => {
-  const { records, addRecord, setActiveStudent } = useContext(PapsContext);
+  const { records, addRecord, setActiveStudent, classCode } = useContext(PapsContext);
   const [showToast, setShowToast] = useState(false);
   const [activeHelp, setActiveHelp] = useState(null);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
+  const [inputCode, setInputCode] = useState('');
+  const [codeError, setCodeError] = useState('');
 
   const [formData, setFormData] = useState({
     schoolName: '서울고척초등학교',
@@ -62,10 +64,17 @@ const TabRecord = ({ onShowPrivacy, onShowTerms }) => {
 
   const handleOpenConfirm = (e) => {
     e.preventDefault();
+    setInputCode('');
+    setCodeError('');
     setShowConfirmModal(true);
   };
 
   const handleSave = async () => {
+    if (inputCode.trim() !== classCode) {
+      setCodeError('승인 코드가 올바르지 않습니다. 선생님께 확인해 보세요!');
+      return;
+    }
+    setCodeError('');
     setShowConfirmModal(false);
     await addRecord(formData);
     setShowToast(true);
@@ -83,6 +92,7 @@ const TabRecord = ({ onShowPrivacy, onShowTerms }) => {
         cardioSub: ''
       }
     });
+    setInputCode('');
   };
 
   // 최근 기록과 즉시 비교하기
@@ -258,6 +268,19 @@ const TabRecord = ({ onShowPrivacy, onShowTerms }) => {
               <p className="text-slate-700">💪 윗몸말아올리기: <b>{formData.values.strength}회</b></p>
               <p className="text-slate-700">⚡ 50m 달리기: <b>{formData.values.power}초</b></p>
               <p className="text-slate-700">🫀 1분 줄넘기: <b>{formData.values.cardioSub}회</b></p>
+            </div>
+
+            <div className="form-group mb-4">
+              <label className="form-label" style={{ color: '#1e293b', fontWeight: 700 }}>🔐 교사 승인 코드 입력</label>
+              <input 
+                type="text" 
+                value={inputCode} 
+                onChange={(e) => setInputCode(e.target.value)} 
+                className="form-control" 
+                placeholder="선생님이 알려주신 승인 코드를 입력하세요"
+                required 
+              />
+              {codeError && <p className="text-red-500 text-xs mt-1 font-bold">{codeError}</p>}
             </div>
 
             <div className="flex gap-2">

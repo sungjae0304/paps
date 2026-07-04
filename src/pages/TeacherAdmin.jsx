@@ -17,7 +17,7 @@ const mockFitGrowthData = [
 ];
 
 const TeacherAdmin = ({ onClose }) => {
-  const { allRecords: records } = useContext(PapsContext);
+  const { allRecords: records, classCode, setClassCode } = useContext(PapsContext);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -123,6 +123,22 @@ const TeacherAdmin = ({ onClose }) => {
 
       <div className="p-4 max-w-2xl mx-auto animate-slide-up space-y-4 pb-12 text-slate-800">
         
+        {/* 🔐 학생 기록 저장 승인 코드 설정 */}
+        <div className="card">
+          <h3 className="mb-2 text-slate-800 flex items-center gap-1.5">🔐 학생 기록 저장 승인 코드 설정</h3>
+          <p className="text-xs text-slate-500 mb-4">학생들이 체력 데이터를 저장할 때 본인 확인/승인을 위해 입력해야 하는 보안 코드입니다.</p>
+          <div className="flex gap-2">
+            <input 
+              type="text" 
+              value={classCode} 
+              onChange={(e) => setClassCode(e.target.value)} 
+              className="form-control" 
+              placeholder="예: 2026"
+              style={{ maxWidth: '200px' }}
+            />
+          </div>
+        </div>
+
         {/* 1. 신체활동역량 종합 성장 그래프 */}
         <div className="card">
           <h3 className="mb-2 text-slate-800 flex items-center gap-1.5"><BarChart3 size={18} className="text-indigo-600"/> 종합 F.I.T 신체활동역량 성장 분석</h3>
