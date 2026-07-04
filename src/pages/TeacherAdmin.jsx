@@ -17,7 +17,7 @@ const mockFitGrowthData = [
 ];
 
 const TeacherAdmin = ({ onClose }) => {
-  const { allRecords: records, classCode, setClassCode } = useContext(PapsContext);
+  const { allRecords: records, classCode, setClassCode, selectedMethods, setSelectedMethods } = useContext(PapsContext);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -61,11 +61,32 @@ const TeacherAdmin = ({ onClose }) => {
 
 
 
+  const getMethodLabel = (domain, value) => {
+    const labels = {
+      shuttleRun: '왕복오래달리기',
+      runWalk: '오래달리기-걷기',
+      stepTest: '스텝검사',
+      sitReach: '앉아윗몸굽히기',
+      totalFlex: '종합유연성',
+      curlUp: '윗몸말아올리기',
+      grip: '악력',
+      pushUp: '팔굽혀펴기',
+      run50: '50m달리기',
+      standingJump: '제자리멀리뛰기',
+      jumpRope: '1분줄넘기'
+    };
+    return labels[value] || value || '';
+  };
+
   const exportCSV = () => {
-    const headers = ['학년', '반', '번호', '날짜', '회차', '왕복오래달리기', '유연성', '근력', '순발력', '줄넘기'];
+    const headers = ['학년', '반', '번호', '성별', '날짜', '회차', '심폐지구력 방식', '심폐지구력 기록', '유연성 방식', '유연성 기록', '근력 방식', '근력 기록', '순발력 방식', '순발력 기록', '줄넘기 기록'];
     const rows = records.map(r => [
-      r.grade, r.classNum, r.studentNum, r.date, r.round,
-      r.values.cardio, r.values.flexibility, r.values.strength, r.values.power, r.values.cardioSub
+      r.grade, r.classNum, r.studentNum, r.gender === 'male' ? '남' : '여', r.date, r.round,
+      getMethodLabel('cardio', r.methods?.cardio), r.values.cardio,
+      getMethodLabel('flexibility', r.methods?.flexibility), r.values.flexibility,
+      getMethodLabel('strength', r.methods?.strength), r.values.strength,
+      getMethodLabel('power', r.methods?.power), r.values.power,
+      r.values.cardioSub
     ]);
     
     const csvContent = "data:text/csv;charset=utf-8,\uFEFF" 
@@ -136,6 +157,76 @@ const TeacherAdmin = ({ onClose }) => {
               placeholder="예: 2026"
               style={{ maxWidth: '200px' }}
             />
+          </div>
+        </div>
+
+        {/* ⚙️ 우리 학교 측정 종목 설정 */}
+        <div className="card">
+          <h3 className="mb-2 text-slate-800 flex items-center gap-1.5">🏫 우리 학교 측정 종목 설정</h3>
+          <p className="text-xs text-slate-500 mb-4">학교별 PAPS 평가 계획에 맞게 영역별 측정 종목을 지정하세요. 학생 화면에 반영됩니다.</p>
+          
+          <div className="space-y-3 mt-2">
+            <div>
+              <label className="text-xs font-black text-slate-700 block mb-1">🫀 심폐지구력 영역</label>
+              <select
+                value={selectedMethods.cardio}
+                onChange={(e) => setSelectedMethods({ ...selectedMethods, cardio: e.target.value })}
+                className="form-control text-xs py-1"
+              >
+                <option value="shuttleRun">왕복오래달리기 (회)</option>
+                <option value="runWalk">오래달리기-걷기 (초)</option>
+                <option value="stepTest">스텝검사 (PEI)</option>
+              </select>
+            </div>
+
+            <div>
+              <label className="text-xs font-black text-slate-700 block mb-1">🤸 유연성 영역</label>
+              <select
+                value={selectedMethods.flexibility}
+                onChange={(e) => setSelectedMethods({ ...selectedMethods, flexibility: e.target.value })}
+                className="form-control text-xs py-1"
+              >
+                <option value="sitReach">앉아윗몸앞으로굽히기 (cm)</option>
+                <option value="totalFlex">종합유연성 (점수)</option>
+              </select>
+            </div>
+
+            <div>
+              <label className="text-xs font-black text-slate-700 block mb-1">💪 근력·근지구력 영역</label>
+              <select
+                value={selectedMethods.strength}
+                onChange={(e) => setSelectedMethods({ ...selectedMethods, strength: e.target.value })}
+                className="form-control text-xs py-1"
+              >
+                <option value="curlUp">윗몸말아올리기 (회)</option>
+                <option value="grip">악력 (kg)</option>
+                <option value="pushUp">팔굽혀펴기 (회)</option>
+              </select>
+            </div>
+
+            <div>
+              <label className="text-xs font-black text-slate-700 block mb-1">⚡ 순발력 영역</label>
+              <select
+                value={selectedMethods.power}
+                onChange={(e) => setSelectedMethods({ ...selectedMethods, power: e.target.value })}
+                className="form-control text-xs py-1"
+              >
+                <option value="run50">50m 달리기 (초)</option>
+                <option value="standingJump">제자리멀리뛰기 (cm)</option>
+              </select>
+            </div>
+
+            <div>
+              <label className="text-xs font-black text-slate-700 block mb-1">🫀 보조평가 / 체지방 영역</label>
+              <select
+                value={selectedMethods.cardioSub}
+                onChange={(e) => setSelectedMethods({ ...selectedMethods, cardioSub: e.target.value })}
+                className="form-control text-xs py-1"
+              >
+                <option value="jumpRope">1분 줄넘기 (회)</option>
+                <option value="bmi">체질량지수 (BMI)</option>
+              </select>
+            </div>
           </div>
         </div>
 
@@ -212,25 +303,33 @@ const TeacherAdmin = ({ onClose }) => {
           <p className="text-xs text-slate-500 mb-4">학생들의 체력 측정 현황입니다.</p>
           
           <div className="overflow-x-auto mb-4">
-            <table className="w-full text-xs text-left">
+            <table className="w-full text-xs text-left" style={{ minWidth: '700px' }}>
               <thead className="text-[10px] text-slate-700 uppercase bg-slate-100">
                 <tr>
                   <th className="px-2 py-2">학번</th>
+                  <th className="px-2 py-2">성별</th>
                   <th className="px-2 py-2">회차</th>
-                  <th className="px-2 py-2">오래달리기</th>
+                  <th className="px-2 py-2">심폐지구력</th>
                   <th className="px-2 py-2">유연성</th>
+                  <th className="px-2 py-2">근력</th>
+                  <th className="px-2 py-2">순발력</th>
+                  <th className="px-2 py-2">줄넘기</th>
                 </tr>
               </thead>
               <tbody>
                 {records.length === 0 ? (
-                  <tr><td colSpan="4" className="text-center py-4 text-slate-500">데이터가 없습니다.</td></tr>
+                  <tr><td colSpan="8" className="text-center py-4 text-slate-500">데이터가 없습니다.</td></tr>
                 ) : (
                   records.map(r => (
-                    <tr key={r.id} className="bg-white border-b">
-                      <td className="px-2 py-2 font-medium">{r.grade}-{r.classNum}-{r.studentNum}</td>
+                    <tr key={r.id} className="bg-white border-b text-slate-700">
+                      <td className="px-2 py-2 font-medium text-slate-900">{r.grade}-{r.classNum}-{r.studentNum}</td>
+                      <td className="px-2 py-2">{r.gender === 'male' ? '남' : '여'}</td>
                       <td className="px-2 py-2">{r.round}차</td>
-                      <td className="px-2 py-2">{r.values.cardio}회</td>
-                      <td className="px-2 py-2">{r.values.flexibility}cm</td>
+                      <td className="px-2 py-2">{r.values.cardio} ({getMethodLabel('cardio', r.methods?.cardio)})</td>
+                      <td className="px-2 py-2">{r.values.flexibility} ({getMethodLabel('flexibility', r.methods?.flexibility)})</td>
+                      <td className="px-2 py-2">{r.values.strength} ({getMethodLabel('strength', r.methods?.strength)})</td>
+                      <td className="px-2 py-2">{r.values.power} ({getMethodLabel('power', r.methods?.power)})</td>
+                      <td className="px-2 py-2">{r.values.cardioSub}회</td>
                     </tr>
                   ))
                 )}

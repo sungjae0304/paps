@@ -25,11 +25,17 @@ export const saveRecordToFirebase = async (recordData) => {
       number: parseInt(recordData.studentNum),
       round: parseInt(recordData.round),
       date: recordData.date,
+      gender: recordData.gender || "male",
       cardio: parseFloat(recordData.values.cardio) || 0,
       flexibility: parseFloat(recordData.values.flexibility) || 0,
       strength: parseFloat(recordData.values.strength) || 0,
       speed: parseFloat(recordData.values.power) || 0,
       jump_rope: parseFloat(recordData.values.cardioSub) || 0,
+      cardio_method: recordData.methods?.cardio || "shuttleRun",
+      flexibility_method: recordData.methods?.flexibility || "sitReach",
+      strength_method: recordData.methods?.strength || "curlUp",
+      power_method: recordData.methods?.power || "run50",
+      cardio_sub_method: recordData.methods?.cardioSub || "jumpRope",
       created_at: serverTimestamp()
     });
     console.log("Firestore 저장 성공, ID:", docRef.id);
@@ -55,6 +61,14 @@ export const fetchRecordsFromFirebase = async () => {
         studentNum: String(data.number),
         date: data.date,
         round: String(data.round),
+        gender: data.gender || "male",
+        methods: {
+          cardio: data.cardio_method || "shuttleRun",
+          flexibility: data.flexibility_method || "sitReach",
+          strength: data.strength_method || "curlUp",
+          power: data.power_method || "run50",
+          cardioSub: data.cardio_sub_method || "jumpRope"
+        },
         values: {
           cardio: data.cardio,
           flexibility: data.flexibility,
