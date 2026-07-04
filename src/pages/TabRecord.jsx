@@ -13,7 +13,7 @@ const explanations = {
 
 const TabRecord = ({ onShowPrivacy, onShowTerms }) => {
   const navigate = useNavigate();
-  const { records, addRecord, setActiveStudent, classCode, calculateGrade, selectedMethods } = useContext(PapsContext);
+  const { records, addRecord, activeStudent, setActiveStudent, classCode, calculateGrade, selectedMethods } = useContext(PapsContext);
   const [showToast, setShowToast] = useState(false);
   const [activeHelp, setActiveHelp] = useState(null);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
@@ -88,14 +88,17 @@ const TabRecord = ({ onShowPrivacy, onShowTerms }) => {
   };
 
   useEffect(() => {
-    setActiveStudent({
-      schoolName: formData.schoolName,
-      grade: formData.grade,
-      classNum: formData.classNum,
-      studentNum: formData.studentNum,
-      gender: formData.gender
-    });
-  }, [formData.schoolName, formData.grade, formData.classNum, formData.studentNum, formData.gender, setActiveStudent]);
+    if (activeStudent) {
+      setFormData(prev => ({
+        ...prev,
+        schoolName: activeStudent.schoolName,
+        grade: activeStudent.grade,
+        classNum: activeStudent.classNum,
+        studentNum: activeStudent.studentNum,
+        gender: activeStudent.gender
+      }));
+    }
+  }, [activeStudent]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -211,71 +214,6 @@ const TabRecord = ({ onShowPrivacy, onShowTerms }) => {
 
       <div className="card">
         <form onSubmit={handleOpenConfirm}>
-          <div style={{ background: '#f8fafc', padding: '1.25rem', borderRadius: '14px', border: '1px solid #e2e8f0', marginBottom: '1.5rem' }}>
-            <h4 style={{ fontSize: '0.75rem', fontWeight: 800, color: '#475569', letterSpacing: '0.05em', marginBottom: '1rem', textTransform: 'uppercase' }}>🏫 학생 소속 정보</h4>
-
-            <div className="form-group" style={{ marginBottom: '1rem' }}>
-              <label className="form-label" style={{ color: '#1e293b', fontWeight: 700 }}>학교명</label>
-              <input type="text" name="schoolName" value={formData.schoolName} onChange={handleChange} className="form-control" placeholder="학교명을 입력하세요" required />
-            </div>
-
-            <div className="form-group" style={{ marginBottom: '1rem' }}>
-              <label className="form-label" style={{ color: '#1e293b', fontWeight: 700 }}>성별</label>
-              <div className="flex gap-4 mt-1">
-                <label className="flex items-center gap-1.5 cursor-pointer text-slate-800 text-sm font-bold">
-                  <input
-                    type="radio"
-                    name="gender"
-                    value="male"
-                    checked={formData.gender === 'male'}
-                    onChange={handleChange}
-                    className="w-4 h-4 accent-blue-600"
-                  />
-                  남학생
-                </label>
-                <label className="flex items-center gap-1.5 cursor-pointer text-slate-800 text-sm font-bold">
-                  <input
-                    type="radio"
-                    name="gender"
-                    value="female"
-                    checked={formData.gender === 'female'}
-                    onChange={handleChange}
-                    className="w-4 h-4 accent-pink-600"
-                  />
-                  여학생
-                </label>
-              </div>
-            </div>
-
-            <div className="grid grid-cols-3 gap-2">
-              <div className="form-group mb-0">
-                <label className="form-label" style={{ color: '#1e293b', fontWeight: 700 }}>학년</label>
-                <select name="grade" value={formData.grade} onChange={handleChange} className="form-control" required>
-                  <option value="초4">초 4학년</option>
-                  <option value="초5">초 5학년</option>
-                  <option value="초6">초 6학년</option>
-                  <option value="중1">중 1학년</option>
-                  <option value="중2">중 2학년</option>
-                  <option value="중3">중 3학년</option>
-                  <option value="고1">고 1학년</option>
-                  <option value="고2">고 2학년</option>
-                  <option value="고3">고 3학년</option>
-                </select>
-              </div>
-              <div className="form-group mb-0">
-                <label className="form-label" style={{ color: '#1e293b', fontWeight: 700 }}>반</label>
-                <select name="classNum" value={formData.classNum} onChange={handleChange} className="form-control" required>
-                  {[...Array(10)].map((_, i) => (
-                    <option key={i} value={i + 1}>{i + 1}반</option>
-                  ))}
-                </select>
-              </div>
-              <div className="form-group mb-0">
-                <label className="form-label" style={{ color: '#1e293b', fontWeight: 700 }}>번호</label>
-                <input type="number" name="studentNum" value={formData.studentNum} onChange={handleChange} className="form-control" min="1" max="35" required />
-              </div>
-            </div>
-          </div>
 
           <div className="grid grid-cols-3 gap-2 mb-4">
             <div className="form-group mb-0">

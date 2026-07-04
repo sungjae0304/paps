@@ -316,13 +316,18 @@ const calculateGrade = (type, value, method = '', gender = 'male', grade = '5') 
 };
 
 export const PapsProvider = ({ children }) => {
-  const [activeStudent, setActiveStudent] = useState({
-    schoolName: '서울고척초등학교',
-    grade: '초5',
-    classNum: '1',
-    studentNum: '1',
-    gender: 'male'
+  const [activeStudent, setActiveStudent] = useState(() => {
+    const saved = localStorage.getItem('paps_active_student');
+    return saved ? JSON.parse(saved) : null;
   });
+
+  useEffect(() => {
+    if (activeStudent) {
+      localStorage.setItem('paps_active_student', JSON.stringify(activeStudent));
+    } else {
+      localStorage.removeItem('paps_active_student');
+    }
+  }, [activeStudent]);
 
   const [classCode, setClassCode] = useState('2026'); // 기본 코드
 
@@ -417,6 +422,7 @@ export const PapsProvider = ({ children }) => {
   };
 
   const getStudentRecords = () => {
+    if (!activeStudent) return [];
     return records.filter(r => 
       normalizeGrade(r.grade) === normalizeGrade(activeStudent.grade) && 
       String(r.classNum) === String(activeStudent.classNum) && 
