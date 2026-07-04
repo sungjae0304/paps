@@ -318,7 +318,7 @@ const calculateGrade = (type, value, method = '', gender = 'male', grade = '5') 
 export const PapsProvider = ({ children }) => {
   const [activeStudent, setActiveStudent] = useState({
     schoolName: '서울고척초등학교',
-    grade: '5',
+    grade: '초5',
     classNum: '1',
     studentNum: '1',
     gender: 'male'
@@ -408,11 +408,19 @@ export const PapsProvider = ({ children }) => {
     setRecords([...records, finalRecord]);
   };
 
+  const normalizeGrade = (g) => {
+    if (!g) return '';
+    let val = g.toString().replace(/초|중|고/g, '');
+    if (['4','5','6'].includes(val)) return '초' + val;
+    if (['7','8','9','m1','m2','m3'].includes(val) || val.includes('중')) return '중' + val.replace(/중|m/g, '');
+    return '고' + val.replace(/고|h/g, '');
+  };
+
   const getStudentRecords = () => {
     return records.filter(r => 
-      r.grade === activeStudent.grade && 
-      r.classNum === activeStudent.classNum && 
-      r.studentNum === activeStudent.studentNum
+      normalizeGrade(r.grade) === normalizeGrade(activeStudent.grade) && 
+      String(r.classNum) === String(activeStudent.classNum) && 
+      String(r.studentNum) === String(activeStudent.studentNum)
     );
   };
 

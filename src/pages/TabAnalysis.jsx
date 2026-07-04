@@ -57,8 +57,7 @@ const typeLabels = {
   cardio: '🫀 왕복오래달리기',
   flexibility: '🤸 유연성',
   strength: '💪 근력·근지구력',
-  power: '⚡ 순발력',
-  cardioSub: '🫀 1분 줄넘기'
+  power: '⚡ 순발력'
 };
 
 const TabAnalysis = () => {
@@ -88,7 +87,6 @@ const TabAnalysis = () => {
     { subject: '유연성', A: 6 - record.grades.flexibility },
     { subject: '근력', A: 6 - record.grades.strength },
     { subject: '순발력', A: 6 - record.grades.power },
-    { subject: '줄넘기', A: 6 - record.grades.cardioSub },
   ];
 
   // 강점과 약점 찾기

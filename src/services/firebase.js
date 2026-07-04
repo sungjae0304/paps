@@ -20,22 +20,20 @@ export const saveRecordToFirebase = async (recordData) => {
   try {
     const docRef = await addDoc(collection(db, "paps_records"), {
       student_id: `${recordData.grade}-${recordData.classNum}-${recordData.studentNum}`,
-      grade: parseInt(recordData.grade),
-      class: parseInt(recordData.classNum),
-      number: parseInt(recordData.studentNum),
-      round: parseInt(recordData.round),
+      grade: recordData.grade,
+      class: parseInt(recordData.classNum) || 1,
+      number: parseInt(recordData.studentNum) || 1,
+      round: parseInt(recordData.round) || 1,
       date: recordData.date,
       gender: recordData.gender || "male",
       cardio: parseFloat(recordData.values.cardio) || 0,
       flexibility: parseFloat(recordData.values.flexibility) || 0,
       strength: parseFloat(recordData.values.strength) || 0,
       speed: parseFloat(recordData.values.power) || 0,
-      jump_rope: parseFloat(recordData.values.cardioSub) || 0,
       cardio_method: recordData.methods?.cardio || "shuttleRun",
       flexibility_method: recordData.methods?.flexibility || "sitReach",
       strength_method: recordData.methods?.strength || "curlUp",
       power_method: recordData.methods?.power || "run50",
-      cardio_sub_method: recordData.methods?.cardioSub || "jumpRope",
       created_at: serverTimestamp()
     });
     console.log("Firestore 저장 성공, ID:", docRef.id);
@@ -54,9 +52,19 @@ export const fetchRecordsFromFirebase = async () => {
     const records = [];
     querySnapshot.forEach((doc) => {
       const data = doc.data();
+      const rawGrade = data.grade;
+      let gradeStr = String(rawGrade);
+      if (['4','5','6'].includes(gradeStr)) {
+        gradeStr = '초' + gradeStr;
+      } else if (['7','8','9'].includes(gradeStr)) {
+        gradeStr = '중' + (parseInt(gradeStr) - 6);
+      } else if (['10','11','12'].includes(gradeStr)) {
+        gradeStr = '고' + (parseInt(gradeStr) - 9);
+      }
+
       records.push({
         id: doc.id,
-        grade: String(data.grade),
+        grade: gradeStr,
         classNum: String(data.class),
         studentNum: String(data.number),
         date: data.date,
@@ -66,15 +74,13 @@ export const fetchRecordsFromFirebase = async () => {
           cardio: data.cardio_method || "shuttleRun",
           flexibility: data.flexibility_method || "sitReach",
           strength: data.strength_method || "curlUp",
-          power: data.power_method || "run50",
-          cardioSub: data.cardio_sub_method || "jumpRope"
+          power: data.power_method || "run50"
         },
         values: {
           cardio: data.cardio,
           flexibility: data.flexibility,
           strength: data.strength,
-          power: data.speed,
-          cardioSub: data.jump_rope
+          power: data.speed
         },
         grades: {
           // 로컬에서 계산할 것이므로 여기서는 placeholder 처리 가능 또는 로컬 계산
