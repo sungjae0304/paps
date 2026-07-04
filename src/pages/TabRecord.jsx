@@ -64,17 +64,15 @@ const TabRecord = ({ onShowPrivacy, onShowTerms }) => {
 
   const handleOpenConfirm = (e) => {
     e.preventDefault();
-    setInputCode('');
-    setCodeError('');
-    setShowConfirmModal(true);
-  };
-
-  const handleSave = async () => {
     if (inputCode.trim() !== classCode) {
       setCodeError('승인 코드가 올바르지 않습니다. 선생님께 확인해 보세요!');
       return;
     }
     setCodeError('');
+    setShowConfirmModal(true);
+  };
+
+  const handleSave = async () => {
     setShowConfirmModal(false);
     await addRecord(formData);
     setShowToast(true);
@@ -172,7 +170,7 @@ const TabRecord = ({ onShowPrivacy, onShowTerms }) => {
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-2 mb-4">
+          <div className="grid grid-cols-3 gap-2 mb-4">
             <div className="form-group mb-0">
               <label className="form-label flex items-center gap-1"><Calendar size={14}/> 날짜</label>
               <input type="date" name="date" value={formData.date} onChange={handleChange} className="form-control" required />
@@ -185,7 +183,23 @@ const TabRecord = ({ onShowPrivacy, onShowTerms }) => {
                 <option value="3">3차</option>
               </select>
             </div>
+            <div className="form-group mb-0">
+              <label className="form-label flex items-center gap-1">🔐 승인 코드</label>
+              <input 
+                type="text" 
+                value={inputCode} 
+                onChange={(e) => setInputCode(e.target.value)} 
+                className="form-control" 
+                placeholder="2026" 
+                required 
+              />
+            </div>
           </div>
+          {codeError && (
+            <p className="text-red-500 text-xs font-bold mb-4 animate-slide-up" style={{ marginTop: '-0.5rem' }}>
+              ⚠️ {codeError}
+            </p>
+          )}
 
           <h3 className="mt-4 mb-2">PAPS 측정값 입력</h3>
           
@@ -270,18 +284,7 @@ const TabRecord = ({ onShowPrivacy, onShowTerms }) => {
               <p className="text-slate-700">🫀 1분 줄넘기: <b>{formData.values.cardioSub}회</b></p>
             </div>
 
-            <div className="form-group mb-4">
-              <label className="form-label" style={{ color: '#1e293b', fontWeight: 700 }}>🔐 교사 승인 코드 입력</label>
-              <input 
-                type="text" 
-                value={inputCode} 
-                onChange={(e) => setInputCode(e.target.value)} 
-                className="form-control" 
-                placeholder="선생님이 알려주신 승인 코드를 입력하세요"
-                required 
-              />
-              {codeError && <p className="text-red-500 text-xs mt-1 font-bold">{codeError}</p>}
-            </div>
+
 
             <div className="flex gap-2">
               <button onClick={() => setShowConfirmModal(false)} className="btn btn-secondary flex-1">
