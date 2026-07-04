@@ -19,7 +19,7 @@ const slides = [
             <span className="text-2xl">🔑</span> 선생님: 우측 상단 열쇠 아이콘 클릭
           </h4>
           <p className="text-sm text-slate-600 leading-relaxed">
-            비밀번호 4자리를 입력하면 교사용 관리 화면이 열려요.
+            비밀번호 4자리(기본: 0000) 입력 시 관리 화면이 열리며, 학생들의 **데이터 저장 승인 코드를 설정 및 확인**하고 피드백을 남길 수 있어요.
           </p>
         </div>
       </div>
