@@ -410,7 +410,7 @@ export const PapsProvider = ({ children }) => {
     // Firebase 연동 (Mock)
     await saveRecordToFirebase(finalRecord);
 
-    setRecords([...records, finalRecord]);
+    setRecords(prev => [...prev, finalRecord]);
   };
 
   const normalizeGrade = (g) => {
@@ -425,8 +425,8 @@ export const PapsProvider = ({ children }) => {
     if (!activeStudent) return [];
     return records.filter(r => 
       normalizeGrade(r.grade) === normalizeGrade(activeStudent.grade) && 
-      String(r.classNum) === String(activeStudent.classNum) && 
-      String(r.studentNum) === String(activeStudent.studentNum)
+      String(r.classNum).trim() === String(activeStudent.classNum).trim() && 
+      String(r.studentNum).trim() === String(activeStudent.studentNum).trim()
     );
   };
 

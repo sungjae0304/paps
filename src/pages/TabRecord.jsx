@@ -93,10 +93,11 @@ const TabRecord = ({ onShowPrivacy, onShowTerms }) => {
         grade: activeStudent.grade,
         classNum: activeStudent.classNum,
         studentNum: activeStudent.studentNum,
-        gender: activeStudent.gender
+        gender: activeStudent.gender,
+        methods: selectedMethods
       }));
     }
-  }, [activeStudent]);
+  }, [activeStudent, selectedMethods]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
