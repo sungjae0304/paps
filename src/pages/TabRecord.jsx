@@ -17,8 +17,6 @@ const TabRecord = ({ onShowPrivacy, onShowTerms }) => {
   const [showToast, setShowToast] = useState(false);
   const [activeHelp, setActiveHelp] = useState(null);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
-  const [inputCode, setInputCode] = useState('');
-  const [codeError, setCodeError] = useState('');
 
   const [formData, setFormData] = useState({
     schoolName: '서울고척초등학교',
@@ -134,11 +132,6 @@ const TabRecord = ({ onShowPrivacy, onShowTerms }) => {
 
   const handleOpenConfirm = (e) => {
     e.preventDefault();
-    if (inputCode.trim() !== classCode) {
-      setCodeError('승인 코드가 올바르지 않습니다. 선생님께 확인해 보세요!');
-      return;
-    }
-    setCodeError('');
     setShowConfirmModal(true);
   };
 
@@ -162,7 +155,6 @@ const TabRecord = ({ onShowPrivacy, onShowTerms }) => {
         power: ''
       }
     });
-    setInputCode('');
   };
 
   const getDiffMsg = (type, currentValue) => {
@@ -215,7 +207,7 @@ const TabRecord = ({ onShowPrivacy, onShowTerms }) => {
       <div className="card">
         <form onSubmit={handleOpenConfirm}>
 
-          <div className="grid grid-cols-3 gap-2 mb-4">
+          <div className="grid grid-cols-2 gap-2 mb-4">
             <div className="form-group mb-0">
               <label className="form-label flex items-center gap-1"><Calendar size={14} /> 날짜</label>
               <input type="date" name="date" value={formData.date} onChange={handleChange} className="form-control" required />
@@ -228,23 +220,7 @@ const TabRecord = ({ onShowPrivacy, onShowTerms }) => {
                 <option value="3">3차</option>
               </select>
             </div>
-            <div className="form-group mb-0">
-              <label className="form-label flex items-center gap-1">🔐 승인 코드</label>
-              <input
-                type="password"
-                value={inputCode}
-                onChange={(e) => setInputCode(e.target.value)}
-                className="form-control"
-                placeholder="코드 입력"
-                required
-              />
-            </div>
           </div>
-          {codeError && (
-            <p className="text-red-500 text-xs font-bold mb-4 animate-slide-up" style={{ marginTop: '-0.5rem' }}>
-              ⚠️ {codeError}
-            </p>
-          )}
 
           <h3 className="mt-4 mb-2">PAPS 측정값 입력</h3>
 

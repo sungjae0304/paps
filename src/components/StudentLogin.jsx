@@ -1,9 +1,9 @@
 import React, { useState, useContext } from 'react';
 import { PapsContext } from '../context/PapsContext';
-import { Compass, GraduationCap, User } from 'lucide-react';
+import { Compass, GraduationCap, User, KeyRound } from 'lucide-react';
 
 const StudentLogin = () => {
-  const { setActiveStudent } = useContext(PapsContext);
+  const { setActiveStudent, classCode } = useContext(PapsContext);
   const [formData, setFormData] = useState({
     schoolName: '서울고척초등학교',
     grade: '초5',
@@ -11,6 +11,8 @@ const StudentLogin = () => {
     studentNum: '1',
     gender: 'male'
   });
+  const [inputCode, setInputCode] = useState('');
+  const [codeError, setCodeError] = useState('');
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -22,6 +24,11 @@ const StudentLogin = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (inputCode.trim() !== classCode) {
+      setCodeError('승인 코드가 올바르지 않습니다. 선생님께 확인해 보세요!');
+      return;
+    }
+    setCodeError('');
     setActiveStudent({
       schoolName: formData.schoolName,
       grade: formData.grade,
@@ -138,6 +145,25 @@ const StudentLogin = () => {
                 required
               />
             </div>
+          </div>
+
+          <div className="form-group text-left">
+            <label className="form-label font-bold text-slate-700 text-xs flex items-center gap-1.5 mb-1" style={{ color: '#475569' }}>
+              <KeyRound size={16} className="text-blue-500" /> 🔐 승인 코드
+            </label>
+            <input
+              type="password"
+              value={inputCode}
+              onChange={(e) => setInputCode(e.target.value)}
+              className="form-control text-sm"
+              placeholder="선생님이 알려주신 승인 코드 입력"
+              required
+            />
+            {codeError && (
+              <p className="text-red-500 text-xs font-bold mt-1.5 animate-slide-up">
+                ⚠️ {codeError}
+              </p>
+            )}
           </div>
 
           <button
