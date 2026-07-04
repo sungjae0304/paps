@@ -1,4 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { PapsContext } from '../context/PapsContext';
 import { Activity, Calendar, Hash, Save, BarChart2, HelpCircle, CheckCircle } from 'lucide-react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
@@ -11,6 +12,7 @@ const explanations = {
 };
 
 const TabRecord = ({ onShowPrivacy, onShowTerms }) => {
+  const navigate = useNavigate();
   const { records, addRecord, setActiveStudent, classCode, calculateGrade, selectedMethods } = useContext(PapsContext);
   const [showToast, setShowToast] = useState(false);
   const [activeHelp, setActiveHelp] = useState(null);
@@ -141,7 +143,10 @@ const TabRecord = ({ onShowPrivacy, onShowTerms }) => {
     setShowConfirmModal(false);
     await addRecord(formData);
     setShowToast(true);
-    setTimeout(() => setShowToast(false), 3000);
+    setTimeout(() => {
+      setShowToast(false);
+      navigate('/analysis');
+    }, 1500);
 
     // Reset values but keep student info, gender and methods
     setFormData({
