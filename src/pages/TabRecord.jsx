@@ -7,8 +7,7 @@ const explanations = {
   cardio: "🫀 심폐지구력: 폐와 심장이 얼마나 오래 버티는지 보여줘!",
   flexibility: "🤸 유연성: 내 척추와 다리 근육이 얼마나 유연한지 보여줘!",
   strength: "💪 근력·근지구력: 배와 몸통 근육이 얼마나 튼튼하고 오래 버티는지 보여줘!",
-  power: "⚡ 순발력: 순간적으로 강력한 힘을 내는 능력을 보여줘!",
-  cardioSub: "🫀 보조평가 / 체지방: 1분 줄넘기 또는 나의 체질량지수를 확인해봐!"
+  power: "⚡ 순발력: 순간적으로 강력한 힘을 내는 능력을 보여줘!"
 };
 
 const TabRecord = ({ onShowPrivacy, onShowTerms }) => {
@@ -31,15 +30,13 @@ const TabRecord = ({ onShowPrivacy, onShowTerms }) => {
       cardio: 'shuttleRun',
       flexibility: 'sitReach',
       strength: 'curlUp',
-      power: 'run50',
-      cardioSub: 'jumpRope'
+      power: 'run50'
     },
     values: {
       cardio: '',
       flexibility: '',
       strength: '',
-      power: '',
-      cardioSub: ''
+      power: ''
     }
   });
 
@@ -65,11 +62,6 @@ const TabRecord = ({ onShowPrivacy, onShowTerms }) => {
     { value: 'standingJump', label: '⚡ 제자리멀리뛰기 (cm)', placeholder: '예: 155', step: '1' }
   ];
 
-  const cardioSubMethods = [
-    { value: 'jumpRope', label: '🫀 1분 줄넘기 (회)', placeholder: '예: 100', step: '1' },
-    { value: 'bmi', label: '📊 체질량지수 (BMI)', placeholder: '예: 18.5', step: '0.1' }
-  ];
-
   // 학교/교사 설정 종목 동기화
   useEffect(() => {
     if (selectedMethods) {
@@ -85,8 +77,7 @@ const TabRecord = ({ onShowPrivacy, onShowTerms }) => {
     if (key === 'cardio') return cardioMethods.find(m => m.value === activeMethod) || cardioMethods[0];
     if (key === 'flexibility') return flexibilityMethods.find(m => m.value === activeMethod) || flexibilityMethods[0];
     if (key === 'strength') return strengthMethods.find(m => m.value === activeMethod) || strengthMethods[0];
-    if (key === 'power') return powerMethods.find(m => m.value === activeMethod) || powerMethods[0];
-    return cardioSubMethods.find(m => m.value === activeMethod) || cardioSubMethods[0];
+    return powerMethods.find(m => m.value === activeMethod) || powerMethods[0];
   };
 
   const getMethodName = (key) => {
@@ -160,8 +151,7 @@ const TabRecord = ({ onShowPrivacy, onShowTerms }) => {
         cardio: '',
         flexibility: '',
         strength: '',
-        power: '',
-        cardioSub: ''
+        power: ''
       }
     });
     setInputCode('');
@@ -319,8 +309,7 @@ const TabRecord = ({ onShowPrivacy, onShowTerms }) => {
             { key: 'cardio', label: '🫀 심폐지구력 영역', methods: cardioMethods },
             { key: 'flexibility', label: '🤸 유연성 영역', methods: flexibilityMethods },
             { key: 'strength', label: '💪 근력·근지구력 영역', methods: strengthMethods },
-            { key: 'power', label: '⚡ 순발력 영역', methods: powerMethods },
-            { key: 'cardioSub', label: '🫀 보조평가 / 체지방 영역', methods: cardioSubMethods }
+            { key: 'power', label: '⚡ 순발력 영역', methods: powerMethods }
           ].map(field => {
             const config = getActiveFieldConfig(field.key);
             return (
@@ -419,7 +408,6 @@ const TabRecord = ({ onShowPrivacy, onShowTerms }) => {
               <p className="text-slate-700">🤸 {getMethodName('flexibility')}: <b>{formData.values.flexibility} ({getGradeDisplay('flexibility')})</b></p>
               <p className="text-slate-700">💪 {getMethodName('strength')}: <b>{formData.values.strength} ({getGradeDisplay('strength')})</b></p>
               <p className="text-slate-700">⚡ {getMethodName('power')}: <b>{formData.values.power} ({getGradeDisplay('power')})</b></p>
-              <p className="text-slate-700">🫀 {getMethodName('cardioSub')}: <b>{formData.values.cardioSub} ({getGradeDisplay('cardioSub')})</b></p>
             </div>
 
             <div className="flex gap-2">

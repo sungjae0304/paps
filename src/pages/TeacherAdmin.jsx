@@ -79,14 +79,13 @@ const TeacherAdmin = ({ onClose }) => {
   };
 
   const exportCSV = () => {
-    const headers = ['학년', '반', '번호', '성별', '날짜', '회차', '심폐지구력 방식', '심폐지구력 기록', '유연성 방식', '유연성 기록', '근력 방식', '근력 기록', '순발력 방식', '순발력 기록', '줄넘기 기록'];
+    const headers = ['학년', '반', '번호', '성별', '날짜', '회차', '심폐지구력 방식', '심폐지구력 기록', '유연성 방식', '유연성 기록', '근력 방식', '근력 기록', '순발력 방식', '순발력 기록'];
     const rows = records.map(r => [
       r.grade, r.classNum, r.studentNum, r.gender === 'male' ? '남' : '여', r.date, r.round,
       getMethodLabel('cardio', r.methods?.cardio), r.values.cardio,
       getMethodLabel('flexibility', r.methods?.flexibility), r.values.flexibility,
       getMethodLabel('strength', r.methods?.strength), r.values.strength,
-      getMethodLabel('power', r.methods?.power), r.values.power,
-      r.values.cardioSub
+      getMethodLabel('power', r.methods?.power), r.values.power
     ]);
     
     const csvContent = "data:text/csv;charset=utf-8,\uFEFF" 
@@ -215,18 +214,6 @@ const TeacherAdmin = ({ onClose }) => {
                 <option value="standingJump">제자리멀리뛰기 (cm)</option>
               </select>
             </div>
-
-            <div>
-              <label className="text-xs font-black text-slate-700 block mb-1">🫀 보조평가 / 체지방 영역</label>
-              <select
-                value={selectedMethods.cardioSub}
-                onChange={(e) => setSelectedMethods({ ...selectedMethods, cardioSub: e.target.value })}
-                className="form-control text-xs py-1"
-              >
-                <option value="jumpRope">1분 줄넘기 (회)</option>
-                <option value="bmi">체질량지수 (BMI)</option>
-              </select>
-            </div>
           </div>
         </div>
 
@@ -313,12 +300,11 @@ const TeacherAdmin = ({ onClose }) => {
                   <th className="px-2 py-2">유연성</th>
                   <th className="px-2 py-2">근력</th>
                   <th className="px-2 py-2">순발력</th>
-                  <th className="px-2 py-2">줄넘기</th>
                 </tr>
               </thead>
               <tbody>
                 {records.length === 0 ? (
-                  <tr><td colSpan="8" className="text-center py-4 text-slate-500">데이터가 없습니다.</td></tr>
+                  <tr><td colSpan="7" className="text-center py-4 text-slate-500">데이터가 없습니다.</td></tr>
                 ) : (
                   records.map(r => (
                     <tr key={r.id} className="bg-white border-b text-slate-700">
@@ -329,7 +315,6 @@ const TeacherAdmin = ({ onClose }) => {
                       <td className="px-2 py-2">{r.values.flexibility} ({getMethodLabel('flexibility', r.methods?.flexibility)})</td>
                       <td className="px-2 py-2">{r.values.strength} ({getMethodLabel('strength', r.methods?.strength)})</td>
                       <td className="px-2 py-2">{r.values.power} ({getMethodLabel('power', r.methods?.power)})</td>
-                      <td className="px-2 py-2">{r.values.cardioSub}회</td>
                     </tr>
                   ))
                 )}

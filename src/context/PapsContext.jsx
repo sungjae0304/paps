@@ -312,49 +312,6 @@ const calculateGrade = (type, value, method = '', gender = 'male', grade = '5') 
     }
   }
 
-  // 5. 보조평가 / 체지방 (cardioSub)
-  if (type === 'cardioSub') {
-    const activeMethod = method || 'jumpRope';
-    if (activeMethod === 'jumpRope') { // 1분 줄넘기 (회, 높을수록 좋음)
-      if (v >= 120) return 1;
-      if (v >= 100) return 2;
-      if (v >= 80) return 3;
-      if (v >= 60) return 4;
-      return 5;
-    } else if (activeMethod === 'bmi') { // 체질량지수 (BMI) 판정
-      const bmiThresholds = {
-        male: {
-          '초4': [14.2, 20.7, 23.2, 29.9],
-          '초5': [14.5, 21.6, 24.4, 29.9],
-          '초6': [14.8, 22.5, 24.9, 29.9],
-          '중1': [15.3, 23.2, 24.9, 29.9],
-          '중2': [15.7, 23.8, 24.9, 29.9],
-          '중3': [16.2, 24.3, 24.9, 29.9],
-          '고1': [16.7, 24.6, 24.9, 29.9],
-          '고2': [17.2, 24.9, 25.0, 29.9],
-          '고3': [17.7, 24.9, 25.0, 29.9]
-        },
-        female: {
-          '초4': [13.9, 19.8, 22.0, 29.9],
-          '초5': [14.2, 20.6, 23.0, 29.9],
-          '초6': [14.6, 21.4, 23.9, 29.9],
-          '중1': [15.1, 22.1, 24.7, 29.9],
-          '중2': [15.6, 22.7, 24.9, 29.9],
-          '중3': [16.2, 23.2, 24.9, 29.9],
-          '고1': [16.7, 23.6, 24.9, 29.9],
-          '고2': [17.2, 23.8, 24.9, 29.9],
-          '고3': [17.6, 23.9, 24.0, 29.9]
-        }
-      };
-      const arr = bmiThresholds[isMale ? 'male' : 'female'][gKey] || bmiThresholds[isMale ? 'male' : 'female']['초5'];
-      if (v <= arr[0]) return '마름';
-      if (v <= arr[1]) return '정상';
-      if (v <= arr[2]) return '과체중';
-      if (v <= arr[3]) return '경도비만';
-      return '고도비만';
-    }
-  }
-
   return 5;
 };
 
@@ -376,8 +333,7 @@ export const PapsProvider = ({ children }) => {
       cardio: 'shuttleRun',
       flexibility: 'sitReach',
       strength: 'curlUp',
-      power: 'run50',
-      cardioSub: 'jumpRope'
+      power: 'run50'
     };
   });
 
@@ -400,22 +356,19 @@ export const PapsProvider = ({ children }) => {
         cardio: 'shuttleRun',
         flexibility: 'sitReach',
         strength: 'curlUp',
-        power: 'run50',
-        cardioSub: 'jumpRope'
+        power: 'run50'
       },
       values: {
         cardio: 35,
         flexibility: 8,
         strength: 25,
-        power: 10.0,
-        cardioSub: 90
+        power: 10.0
       },
       grades: {
         cardio: 3,
         flexibility: 3,
         strength: 3,
-        power: 3,
-        cardioSub: 3
+        power: 3
       }
     }
   ]);
@@ -429,8 +382,7 @@ export const PapsProvider = ({ children }) => {
             cardio: calculateGrade('cardio', r.values.cardio, r.methods?.cardio, r.gender, r.grade),
             flexibility: calculateGrade('flexibility', r.values.flexibility, r.methods?.flexibility, r.gender, r.grade),
             strength: calculateGrade('strength', r.values.strength, r.methods?.strength, r.gender, r.grade),
-            power: calculateGrade('power', r.values.power, r.methods?.power, r.gender, r.grade),
-            cardioSub: calculateGrade('cardioSub', r.values.cardioSub, r.methods?.cardioSub, r.gender, r.grade),
+            power: calculateGrade('power', r.values.power, r.methods?.power, r.gender, r.grade)
           };
           return { ...r, grades };
         });
@@ -445,8 +397,7 @@ export const PapsProvider = ({ children }) => {
       cardio: calculateGrade('cardio', newRecord.values.cardio, newRecord.methods?.cardio, newRecord.gender, newRecord.grade),
       flexibility: calculateGrade('flexibility', newRecord.values.flexibility, newRecord.methods?.flexibility, newRecord.gender, newRecord.grade),
       strength: calculateGrade('strength', newRecord.values.strength, newRecord.methods?.strength, newRecord.gender, newRecord.grade),
-      power: calculateGrade('power', newRecord.values.power, newRecord.methods?.power, newRecord.gender, newRecord.grade),
-      cardioSub: calculateGrade('cardioSub', newRecord.values.cardioSub, newRecord.methods?.cardioSub, newRecord.gender, newRecord.grade),
+      power: calculateGrade('power', newRecord.values.power, newRecord.methods?.power, newRecord.gender, newRecord.grade)
     };
 
     const finalRecord = { ...newRecord, grades, id: Date.now() };
