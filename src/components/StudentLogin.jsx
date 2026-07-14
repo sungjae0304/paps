@@ -5,7 +5,7 @@ import { Compass, GraduationCap, User, KeyRound } from 'lucide-react';
 const StudentLogin = () => {
   const { setActiveStudent, classCode } = useContext(PapsContext);
   const [formData, setFormData] = useState({
-    schoolName: '서울고척초등학교',
+    schoolName: 'OO초등학교',
     grade: '초5',
     classNum: '1',
     studentNum: '1',

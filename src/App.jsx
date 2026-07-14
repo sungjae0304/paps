@@ -127,7 +127,7 @@ function MainApp() {
         
         <footer className="fixed bottom-0 left-0 w-full bg-[#1E293B] text-white flex justify-between items-center px-4 z-[200]" style={{ height: '36px', fontSize: '12px' }}>
           <div className="flex gap-2 items-center">
-            <span>🏫 {activeStudent?.schoolName || '서울고척초등학교'}</span>
+            <span>🏫 {activeStudent?.schoolName || 'OO초등학교'}</span>
             <span style={{ opacity: 0.3 }}>|</span>
             <button onClick={() => setShowPrivacy(true)} className="text-white hover:underline bg-transparent border-none p-0 cursor-pointer" style={{ fontSize: '11px', outline: 'none' }}>개인정보처리방침</button>
             <span style={{ opacity: 0.3 }}>|</span>

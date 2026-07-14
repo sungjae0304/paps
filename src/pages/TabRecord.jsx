@@ -19,7 +19,7 @@ const TabRecord = ({ onShowPrivacy, onShowTerms }) => {
   const [showConfirmModal, setShowConfirmModal] = useState(false);
 
   const [formData, setFormData] = useState({
-    schoolName: '서울고척초등학교',
+    schoolName: 'OO초등학교',
     grade: '초5',
     classNum: '1',
     studentNum: '1',

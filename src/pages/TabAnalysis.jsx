@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { PapsContext } from '../context/PapsContext';
-import { Compass, Award, AlertCircle, Dumbbell } from 'lucide-react';
+import { Compass, Award, AlertCircle, Dumbbell, Share2 } from 'lucide-react';
 import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer } from 'recharts';
 
 const levelNames = {
@@ -137,11 +137,39 @@ const TabAnalysis = () => {
     return Math.round((checkedCount / savedRoutine.days.length) * 100);
   };
 
+  const handleShare = async () => {
+    const shareData = {
+      title: 'D.A.T.A 탐험대',
+      text: '나의 체력 데이터를 분석하고 나만의 운동 루틴을 만들어보세요!',
+      url: window.location.origin
+    };
+
+    try {
+      if (navigator.share) {
+        await navigator.share(shareData);
+      } else {
+        await navigator.clipboard.writeText(window.location.origin);
+        alert('공유 링크가 클립보드에 복사되었습니다.');
+      }
+    } catch (err) {
+      console.error('공유하기 실패:', err);
+    }
+  };
+
   return (
     <div className="animate-slide-up pb-12">
-      <div className="flex items-center gap-2 mb-4">
-        <Compass className="level-3-text" />
-        <h2>데이터 분석</h2>
+      <div className="flex items-center justify-between mb-4">
+        <div className="flex items-center gap-2">
+          <Compass className="level-3-text" />
+          <h2 className="mb-0">데이터 분석</h2>
+        </div>
+        <button 
+          onClick={handleShare}
+          className="flex items-center gap-1 bg-indigo-100 text-indigo-700 px-3 py-1.5 rounded-full text-xs font-bold border-none cursor-pointer hover:bg-indigo-200 transition-colors"
+        >
+          <Share2 size={14} />
+          공유하기
+        </button>
       </div>
 
       {/* 체지방 비만 제거 심리 안전 문구 */}
