@@ -27,7 +27,7 @@ const SplashScreen = ({ onFinish }) => {
         
         <div className="text-white text-xs text-center opacity-80 mt-12 space-y-1">
           <p>소속학교: OO초등학교</p>
-          <p>제작자: 이성재</p>
+          <p>제작자: OOO</p>
         </div>
       </div>
     </div>

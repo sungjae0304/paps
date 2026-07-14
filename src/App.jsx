@@ -133,7 +133,7 @@ function MainApp() {
             <span style={{ opacity: 0.3 }}>|</span>
             <button onClick={() => setShowTerms(true)} className="text-white hover:underline bg-transparent border-none p-0 cursor-pointer" style={{ fontSize: '11px', outline: 'none' }}>사용약관</button>
           </div>
-          <span>제작자 이성재</span>
+          <span>제작자 OOO</span>
         </footer>
 
         {showAdmin && <TeacherAdmin onClose={() => setShowAdmin(false)} />}
